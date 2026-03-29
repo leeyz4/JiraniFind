@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  // url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model User {
+  id               String    @id @default(uuid())
+  name             String
+  email            String    @unique
+  password         String
+  role             UserRole  @default(USER)
+  phone            String?
+  isVerified       Boolean   @default(false)
+  verificationCode String? // 6-digit OTP-style code
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  deletedAt        DateTime? // soft delete
+  resetToken       String? // for password reset
+  resetTokenExpiry DateTime? // for password reset expiry
+
+  Notification Notification[]
+}
+
+enum ItemStatus {
+  PENDING
+  APPROVED
+  MATCHED
+}
+
+enum TypeStatus {
+  LOST
+  FOUND
+}
+
+model Item {
+  id          String     @id @default(uuid())
+  title       String
+  description String
+  category    String
+  type        TypeStatus
+  location    String
+  date        String
+  status      ItemStatus @default(PENDING)
+  userId      String
+  imageUrl    String
+  Notification Notification[]
+}
+
+enum ClaimStatus {
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
+}
+
+model Claims {
+  id     String      @id @default(uuid())
+  itemId String      @unique
+  userId String
+  status ClaimStatus @default(PENDING_APPROVAL)
+}
+
+model Notification {
+  id        String    @id @default(uuid())
+  message   String
+  toEmail   String
+  sentAt    DateTime  @default(now())
+  itemId    String?
+  userId    String?
+  deletedAt DateTime?
+  read      Boolean   @default(false)
+
+  item Item? @relation(fields: [itemId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
+}
