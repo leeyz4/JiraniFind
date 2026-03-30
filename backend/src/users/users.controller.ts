@@ -1,34 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import {
+  Controller,
+  Get,
+  Put,
+  Body,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
+import { UserService } from './user.service';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
-@Controller('users')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+@Controller('user')
+@UseGuards(JwtAuthGuard)
+export class UserController {
+  constructor(private userService: UserService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @Get('profile')
+  getProfile(@Request() req) {
+    return this.userService.findProfile(req.user.userId);
   }
 
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @Put('profile')
+  updateProfile(@Body() dto: UpdateUserDto, @Request() req) {
+    return this.userService.updateProfile(req.user.userId, dto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Put('password')
+  changePassword(@Body() dto: ChangePasswordDto, @Request() req) {
+    return this.userService.changePassword(req.user.userId, dto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  @Get('activity')
+  getActivity(@Request() req) {
+    return this.userService.getUserActivity(req.user.userId);
   }
 }

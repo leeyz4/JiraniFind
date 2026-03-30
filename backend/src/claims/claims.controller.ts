@@ -1,34 +1,36 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { ClaimsService } from './claims.service';
 import { CreateClaimDto } from './dto/create-claim.dto';
 import { UpdateClaimDto } from './dto/update-claim.dto';
+import { JwtAuthGuard } from '../auth/auth.guard';
 
 @Controller('claims')
+@UseGuards(JwtAuthGuard)
 export class ClaimsController {
   constructor(private readonly claimsService: ClaimsService) {}
 
   @Post()
-  create(@Body() createClaimDto: CreateClaimDto) {
-    return this.claimsService.create(createClaimDto);
+  create(@Body() createClaimDto: CreateClaimDto, @Request() req) {
+    return this.claimsService.create(createClaimDto, req.user.userId);
   }
 
   @Get()
-  findAll() {
-    return this.claimsService.findAll();
+  findAll(@Query('status') status?: string) {
+    return this.claimsService.findAll(status);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.claimsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClaimDto: UpdateClaimDto) {
-    return this.claimsService.update(+id, updateClaimDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.claimsService.remove(+id);
+  @Get('my-claims')
+  findMyClaims(@Request() req) {
+    return this.claimsService.findMyClaims(req.user.userId);
   }
 }

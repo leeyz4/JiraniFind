@@ -1,34 +1,100 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { AdminService } from './admin.service';
-import { CreateAdminDto } from './dto/create-admin.dto';
-import { UpdateAdminDto } from './dto/update-admin.dto';
+import {
+  Controller,
+  Get,
+  Put,
+  Delete,
+  Param,
+  Body,
+  UseGuards,
+  Request,
+  ParseUUIDPipe,
+} from '@nestjs/common';
+import { AdminService, AdminDashboardStats } from './admin.service';
+import { AdminGuard } from './guards/admin.guard';
+import {
+  UpdateItemStatusDto,
+  UpdateClaimStatusDto,
+} from './dto/update-status.dto';
+import { ItemsService } from '../items/items.service';
+import { ClaimsService } from '../claims/claims.service';
 
 @Controller('admin')
+@UseGuards(AdminGuard)
 export class AdminController {
-  constructor(private readonly adminService: AdminService) {}
+  constructor(
+    private readonly adminService: AdminService,
+    private itemsService: ItemsService,
+    private claimsService: ClaimsService,
+  ) {}
 
-  @Post()
-  create(@Body() createAdminDto: CreateAdminDto) {
-    return this.adminService.create(createAdminDto);
+  // === DASHBOARD ===
+  @Get('dashboard')
+  async getDashboard(): Promise<{
+    stats: AdminDashboardStats;
+    pendingItems: any;
+    pendingClaims: any;
+  }> {
+    const [stats, pendingItems, pendingClaims] = await Promise.all([
+      this.adminService.getDashboardStats(),
+      this.adminService.getPendingItems(),
+      this.adminService.getPendingClaims(),
+    ]);
+
+    return { stats, pendingItems, pendingClaims };
   }
 
-  @Get()
-  findAll() {
-    return this.adminService.findAll();
+  // === ITEMS MANAGEMENT ===
+  @Get('pending-items')
+  getPendingItems() {
+    return this.adminService.getPendingItems();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.adminService.findOne(+id);
+  @Put('items/:id/approve')
+  approveItem(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UpdateItemStatusDto,
+  ) {
+    return this.itemsService.updateStatus(id, dto, 'admin');
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
-    return this.adminService.update(+id, updateAdminDto);
+  @Put('items/:id/reject')
+  rejectItem(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UpdateItemStatusDto,
+  ) {
+    return this.itemsService.updateStatus(id, dto, 'admin');
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.adminService.remove(+id);
+  // === CLAIMS MANAGEMENT ===
+  @Get('pending-claims')
+  getPendingClaims() {
+    return this.adminService.getPendingClaims();
+  }
+
+  @Put('claims/:id/approve')
+  approveClaim(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UpdateClaimStatusDto,
+  ) {
+    return this.claimsService.updateStatus(id, dto, 'admin');
+  }
+
+  @Put('claims/:id/reject')
+  rejectClaim(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UpdateClaimStatusDto,
+  ) {
+    return this.claimsService.updateStatus(id, dto, 'admin');
+  }
+
+  // === USERS MANAGEMENT ===
+  @Get('users')
+  getAllUsers() {
+    return this.adminService.getAllUsers();
+  }
+
+  @Delete('users/:id')
+  deleteUser(@Param('id', ParseUUIDPipe) id: string) {
+    return this.adminService.deleteUser(id);
   }
 }

@@ -1,4 +1,16 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateClaimDto } from './create-claim.dto';
+import { IsEnum } from 'class-validator';
 
-export class UpdateClaimDto extends PartialType(CreateClaimDto) {}
+export enum ClaimStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+}
+
+export class UpdateClaimDto {
+  @IsEnum(ClaimStatus)
+  status: ClaimStatus;
+
+  @IsString()
+  @IsOptional()
+  adminMessage?: string;
+}

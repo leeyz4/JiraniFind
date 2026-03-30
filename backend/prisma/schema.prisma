@@ -4,7 +4,7 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
@@ -24,7 +24,7 @@ model User {
   email            String    @unique
   password         String
   role             UserRole  @default(USER)
-  phone            String?
+  // phone            String?
   isVerified       Boolean   @default(false)
   verificationCode String? // 6-digit OTP-style code
   createdAt        DateTime  @default(now())
@@ -33,57 +33,133 @@ model User {
   resetToken       String? // for password reset
   resetTokenExpiry DateTime? // for password reset expiry
 
-  Notification Notification[]
+  lostItems     LostItem[]
+  foundItems    FoundItem[]
+  claims        Claim[]
+  notifications Notification[]
+
+  @@map("users")
 }
 
 enum ItemStatus {
   PENDING
   APPROVED
+  REJECTED
   MATCHED
+  COMPLETED
 }
 
-enum TypeStatus {
-  LOST
-  FOUND
-}
+// enum TypeStatus {
+//   LOST
+//   FOUND
+// }
 
-model Item {
+model LostItem {
   id          String     @id @default(uuid())
   title       String
-  description String
+  description String?
   category    String
-  type        TypeStatus
+  // type        TypeStatus
   location    String
-  date        String
+  dateLost    DateTime
+  imageUrl    String?
   status      ItemStatus @default(PENDING)
-  userId      String
-  imageUrl    String
-  Notification Notification[]
+  approvedAt  DateTime?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  // claims  Claim[]
+  // matches Match[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("lost_items")
+}
+
+model FoundItem {
+  id          String     @id @default(uuid())
+  title       String
+  description String?
+  category    String
+  location    String
+  dateFound   DateTime
+  imageUrl    String?
+  status      ItemStatus @default(PENDING)
+  approvedAt  DateTime?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  // claims  Claim[]
+  // matches Match[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("found_items")
 }
 
 enum ClaimStatus {
-  PENDING_APPROVAL
+  PENDING
   APPROVED
   REJECTED
 }
 
-model Claims {
-  id     String      @id @default(uuid())
-  itemId String      @unique
-  userId String
-  status ClaimStatus @default(PENDING_APPROVAL)
+model Claim {
+  id      String      @id @default(uuid())
+  status  ClaimStatus @default(PENDING)
+  message String?
+
+  lostItemId String?
+  // lostItem   LostItem? @relation("LostItemClaims", fields: [lostItemId], references: [id])
+
+  foundItemId String?
+  // foundItem   FoundItem? @relation("FoundItemClaims", fields: [foundItemId], references: [id])
+
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
+ 
+  @@map("claims")
+}
+
+model Match {
+  id         String @id @default(uuid())
+  confidence Float //0-1 score
+
+  lostItemId String?
+  // lostItem   LostItem? @relation("LostItemClaims", fields: [lostItemId], references: [id])
+
+  foundItemId String?
+  // foundItem   FoundItem? @relation("FoundItemClaims", fields: [foundItemId], references: [id])
+
+  createdAt DateTime   @default(now())
+
+  @@unique([lostItemId, foundItemId])
+  @@map("matches")
+}
+
+enum NotificationType {
+  MATCH_FOUND
+  CLAIM_STATUS
+  ITEM_APPROVED
 }
 
 model Notification {
-  id        String    @id @default(uuid())
-  message   String
-  toEmail   String
-  sentAt    DateTime  @default(now())
-  itemId    String?
-  userId    String?
-  deletedAt DateTime?
-  read      Boolean   @default(false)
+  id      String           @id @default(uuid())
+  title   String
+  message String
+  type    NotificationType
+  read    Boolean          @default(false)
+  //  toEmail   String
+  // sentAt    DateTime  @default(now())
+  // deletedAt DateTime?
 
-  item Item? @relation(fields: [itemId], references: [id])
-  user User? @relation(fields: [userId], references: [id])
+  userId String
+  user   User?  @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@map("notifications")
 }

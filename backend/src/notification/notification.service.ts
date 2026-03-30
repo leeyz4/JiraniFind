@@ -1,26 +1,100 @@
 import { Injectable } from '@nestjs/common';
-import { CreateNotificationDto } from './dto/create-notification.dto';
-import { UpdateNotificationDto } from './dto/update-notification.dto';
+import { PrismaService } from '../prisma/prisma.service';
+import { CreateNotificationDto, NotificationType } from './dto/notification.dto';
+import { MailService } from './mailer/mail.service';
 
 @Injectable()
-export class NotificationService {
-  create(createNotificationDto: CreateNotificationDto) {
-    return 'This action adds a new notification';
+export class NotificationsService {
+  constructor(
+    private prisma: PrismaService,
+    private mailService: MailService,
+  ) {}
+
+  async create(createNotificationDto: CreateNotificationDto) {
+    const notification = await this.prisma.notification.create({
+      data: createNotificationDto,
+      include: {
+        user: {
+          select: { name: true, email: true },
+        },
+      },
+    });
+
+    // Send email (optional)
+    await this.mailService.sendNotificationEmail(
+      notification.user.email,
+      notification.title,
+      notification.message,
+    );
+
+    return notification;
   }
 
-  findAll() {
-    return `This action returns all notification`;
+  async findAll(userId: string) {
+    return this.prisma.notification.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} notification`;
+  async markAsRead(notificationId: string, userId: string) {
+    const notification = await this.prisma.notification.updateMany({
+      where: {
+        id: notificationId,
+        userId,
+      },
+      data: { read: true },
+    });
+
+    return notification.count > 0;
   }
 
-  update(id: number, updateNotificationDto: UpdateNotificationDto) {
-    return `This action updates a #${id} notification`;
+  async markAllAsRead(userId: string) {
+    return this.prisma.notification.updateMany({
+      where: {
+        userId,
+        read: false,
+      },
+      data: { read: true },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} notification`;
+  // === PRE-DEFINED NOTIFICATION HELPERS ===
+
+  async sendMatchNotification(userId: string, itemTitle: string, matchItemTitle: string) {
+    return this.create({
+      title: '🎉 New Match Found!',
+      message: Your "${itemTitle}" has a potential match with "${matchItemTitle}"!,
+      type: NotificationType.MATCH_FOUND,
+      userId,
+    });
+  }
+
+  async sendClaimNotification(userId: string, claimId: string) {
+    return this.create({
+      title: '📩 New Claim Received',
+      message: Someone wants to claim your item! Check claims.,
+      type: NotificationType.CLAIM_CREATED,
+      userId,
+    });
+  }
+
+  async sendClaimStatusNotification(userId: string, claimId: string, status: string) {
+    const statusMessage = status === 'APPROVED' ? '✅ Approved!' : '❌ Rejected';
+    return this.create({
+      title: Claim ${statusMessage},
+      message: Your claim has been ${status.toLowerCase()}.,
+      type: NotificationType.CLAIM_STATUS,
+      userId,
+    });
+  }
+
+  async sendItemApprovedNotification(userId: string, itemTitle: string) {
+    return this.create({
+      title: '✅ Item Approved',
+      message: Your "${itemTitle}" is now live and visible to others!,
+      type: NotificationType.ITEM_APPROVED,
+      userId,
+    });
   }
 }

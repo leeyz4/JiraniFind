@@ -1,34 +1,42 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Query,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
-import { UpdateItemDto } from './dto/update-item.dto';
+import { UpdateItemStatusDto } from './dto/update-item.dto';
+import { JwtAuthGuard } from '../auth/auth.guard';
+import { ItemType } from './entities/item.entity';
 
 @Controller('items')
+@UseGuards(JwtAuthGuard)
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Post()
-  create(@Body() createItemDto: CreateItemDto) {
-    return this.itemsService.create(createItemDto);
+  create(@Body() createItemDto: CreateItemDto, @Request() req) {
+    return this.itemsService.create(createItemDto, req.user.userId);
   }
 
   @Get()
-  findAll() {
-    return this.itemsService.findAll();
+  findAll(
+    @Query('type') type?: ItemType,
+    @Query('status') status?: string,
+    @Query('category') category?: string,
+    @Query('location') location?: string,
+  ) {
+    return this.itemsService.findAll(type as ItemType, status, category, location);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.itemsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateItemDto: UpdateItemDto) {
-    return this.itemsService.update(+id, updateItemDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.itemsService.remove(+id);
+  @Get('my-items')
+  findMyItems(@Request() req) {
+    return this.itemsService.findMyItems(req.user.userId);
   }
 }
