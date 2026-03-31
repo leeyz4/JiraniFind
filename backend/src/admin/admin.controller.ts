@@ -10,7 +10,7 @@ import {
   ParseUUIDPipe,
 } from '@nestjs/common';
 import { AdminService, AdminDashboardStats } from './admin.service';
-import { AdminGuard } from './guards/admin.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
 import {
   UpdateItemStatusDto,
   UpdateClaimStatusDto,
@@ -19,7 +19,7 @@ import { ItemsService } from '../items/items.service';
 import { ClaimsService } from '../claims/claims.service';
 
 @Controller('admin')
-@UseGuards(AdminGuard)
+@UseGuards(RolesGuard)
 export class AdminController {
   constructor(
     private readonly adminService: AdminService,

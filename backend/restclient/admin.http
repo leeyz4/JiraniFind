@@ -1,0 +1,67 @@
+@baseUrl = http://localhost:3000
+@adminToken = REPLACE_WITH_JWT_FROM_ADMIN_USER
+@itemId = 00000000-0000-4000-8000-000000000001
+@claimId = 00000000-0000-4000-8000-000000000002
+@userId = 00000000-0000-4000-8000-000000000003
+
+### All admin routes are under /admin. Use GET/PUT/DELETE in UPPERCASE (not "Get").
+### If you add @Roles(ADMIN) on AdminController, use a user with role ADMIN here.
+
+### Dashboard
+GET {{baseUrl}}/admin/dashboard
+Authorization: Bearer {{adminToken}}
+
+### Pending items queue
+GET {{baseUrl}}/admin/pending-items
+Authorization: Bearer {{adminToken}}
+
+### Approve item (UUID in path)
+PUT {{baseUrl}}/admin/items/{{itemId}}/approve
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "APPROVED",
+  "adminMessage": "Looks valid"
+}
+
+### Reject item
+PUT {{baseUrl}}/admin/items/{{itemId}}/reject
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "REJECTED",
+  "adminMessage": "Not enough detail"
+}
+
+### Pending claims
+GET {{baseUrl}}/admin/pending-claims
+Authorization: Bearer {{adminToken}}
+
+### Approve claim
+PUT {{baseUrl}}/admin/claims/{{claimId}}/approve
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "APPROVED"
+}
+
+### Reject claim
+PUT {{baseUrl}}/admin/claims/{{claimId}}/reject
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "REJECTED",
+  "adminMessage": "Evidence insufficient"
+}
+
+### List users
+GET {{baseUrl}}/admin/users
+Authorization: Bearer {{adminToken}}
+
+### Delete user
+DELETE {{baseUrl}}/admin/users/{{userId}}
+Authorization: Bearer {{adminToken}}

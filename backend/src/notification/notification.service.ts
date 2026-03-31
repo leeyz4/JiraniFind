@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateNotificationDto, NotificationType } from './dto/notification.dto';
+import { CreateNotificationDto } from './dto/notification.dto';
 import { MailService } from './mailer/mail.service';
+import { NotificationType } from '@prisma/client';
 
 @Injectable()
 export class NotificationsService {
@@ -21,11 +22,13 @@ export class NotificationsService {
     });
 
     // Send email (optional)
-    await this.mailService.sendNotificationEmail(
-      notification.user.email,
-      notification.title,
-      notification.message,
-    );
+    if (notification.user?.email) {
+      await this.mailService.sendNotificationEmail(
+        notification.user.email,
+        notification.title,
+        notification.message,
+      );
+    }
 
     return notification;
   }
@@ -64,7 +67,7 @@ export class NotificationsService {
   async sendMatchNotification(userId: string, itemTitle: string, matchItemTitle: string) {
     return this.create({
       title: '🎉 New Match Found!',
-      message: Your "${itemTitle}" has a potential match with "${matchItemTitle}"!,
+      message: `Your "${itemTitle}" has a potential match with "${matchItemTitle}"!`,
       type: NotificationType.MATCH_FOUND,
       userId,
     });
@@ -73,8 +76,8 @@ export class NotificationsService {
   async sendClaimNotification(userId: string, claimId: string) {
     return this.create({
       title: '📩 New Claim Received',
-      message: Someone wants to claim your item! Check claims.,
-      type: NotificationType.CLAIM_CREATED,
+      message: 'Someone wants to claim your item! Check claims.',
+      type: NotificationType.CLAIM_STATUS,
       userId,
     });
   }
@@ -82,8 +85,8 @@ export class NotificationsService {
   async sendClaimStatusNotification(userId: string, claimId: string, status: string) {
     const statusMessage = status === 'APPROVED' ? '✅ Approved!' : '❌ Rejected';
     return this.create({
-      title: Claim ${statusMessage},
-      message: Your claim has been ${status.toLowerCase()}.,
+      title: `Claim ${statusMessage}`,
+      message: `Your claim has been ${status.toLowerCase()}.`,
       type: NotificationType.CLAIM_STATUS,
       userId,
     });
@@ -92,7 +95,7 @@ export class NotificationsService {
   async sendItemApprovedNotification(userId: string, itemTitle: string) {
     return this.create({
       title: '✅ Item Approved',
-      message: Your "${itemTitle}" is now live and visible to others!,
+      message: `Your "${itemTitle}" is now live and visible to others!`,
       type: NotificationType.ITEM_APPROVED,
       userId,
     });

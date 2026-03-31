@@ -5,12 +5,10 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  // url      = env("DATABASE_URL")
 }
 
 enum UserRole {
@@ -25,8 +23,12 @@ model User {
   password         String
   role             UserRole  @default(USER)
   // phone            String?
-  isVerified       Boolean   @default(false)
-  verificationCode String? // 6-digit OTP-style code
+  isVerified                Boolean   @default(false)
+  verificationCode          String? // 6-digit OTP for email verification
+  verificationCodeExpiresAt DateTime?
+  pendingPasswordHash        String? // bcrypt hash, applied after OTP confirms password change
+  passwordChangeOtp          String? // 6-digit OTP for password change
+  passwordChangeOtpExpiresAt DateTime?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
   deletedAt        DateTime? // soft delete

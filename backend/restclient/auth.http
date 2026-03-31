@@ -1,0 +1,37 @@
+@baseUrl = http://localhost:3000
+
+### Register (body required: name, email, password min 6)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "lizyt70@gmail.com",
+  "password": "secret12"
+}
+
+### Verify email (use 6-digit code from welcome email; must verify before login)
+POST {{baseUrl}}/auth/verify-email
+Content-Type: application/json
+
+{
+  "email": "lizyt70@gmail.com",
+  "code": "123456"
+}
+
+### Resend verification code
+POST {{baseUrl}}/auth/resend-verification
+Content-Type: application/json
+
+{
+  "email": "lizyt70@gmail.com"
+}
+
+### Login — only works after email is verified; copy access_token for other requests
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "secret12"
+}

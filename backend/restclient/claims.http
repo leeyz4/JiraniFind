@@ -1,0 +1,26 @@
+@baseUrl = http://localhost:3000
+@token = REPLACE_WITH_JWT_FROM_LOGIN
+
+### Create claim (itemId = UUID of an approved lost or found item)
+POST {{baseUrl}}/claims
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "itemId": "00000000-0000-4000-8000-000000000001",
+  "message": "This is mine — I can describe distinguishing marks."
+}
+
+### List all claims (optional ?status=PENDING|APPROVED|REJECTED)
+GET {{baseUrl}}/claims
+Authorization: Bearer {{token}}
+
+GET {{baseUrl}}/claims?status=PENDING
+Authorization: Bearer {{token}}
+
+### My claims
+GET {{baseUrl}}/claims/my-claims
+Authorization: Bearer {{token}}
+
+### Note: ClaimsController has no PATCH /claims/:id.
+### Admins approve/reject in admin.http (PUT /admin/claims/:id/approve|reject).

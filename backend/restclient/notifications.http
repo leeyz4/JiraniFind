@@ -1,0 +1,15 @@
+@baseUrl = http://localhost:3000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJzdWIiOiJmZTViNGNkNi04OGE2LTQ2MWYtYTNhNy00Zjg3ODhlNjAzM2YiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3NDkxNTQ0NCwiZXhwIjoxNzc1MDAxODQ0fQ.JTSsLcx9HxPcAMgQ8ETJzlZTij5e2PPkERyQeniaGus
+@notificationId = fe5b4cd6-88a6-461f-a3a7-4f8788e6033f
+
+### List my notifications
+GET {{baseUrl}}/notifications
+Authorization: Bearer {{token}}
+
+### Mark one as read
+PATCH {{baseUrl}}/notifications/{{notificationId}}/read
+Authorization: Bearer {{token}}
+
+### Mark all as read
+PATCH {{baseUrl}}/notifications/mark-all-read
+Authorization: Bearer {{token}}

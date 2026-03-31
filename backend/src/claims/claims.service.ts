@@ -3,7 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateClaimDto } from './dto/create-claim.dto';
 import { UpdateClaimDto } from './dto/update-claim.dto';
 import { ItemsService } from '../items/items.service';
-import { NotificationsService } from '../notifications/notifications.service';
+import { NotificationsService } from '../notification/notification.service';
 
 @Injectable()
 export class ClaimsService {
@@ -58,12 +58,6 @@ export class ClaimsService {
         user: {
           select: { id: true, name: true, email: true },
         },
-        lostItem: {
-          include: { user: { select: { name: true, email: true } } },
-        },
-        foundItem: {
-          include: { user: { select: { name: true, email: true } } },
-        },
       },
     });
 
@@ -89,14 +83,8 @@ export class ClaimsService {
         user: {
           select: { id: true, name: true, email: true },
         },
-        lostItem: {
-          include: { user: { select: { name: true, email: true } } },
-        },
-        foundItem: {
-          include: { user: { select: { name: true, email: true } } },
-        },
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { id: 'desc' },
     });
 
     return claims;
@@ -107,14 +95,8 @@ export class ClaimsService {
       where: { userId },
       include: {
         user: true,
-        lostItem: {
-          include: { user: { select: { name: true, email: true } } },
-        },
-        foundItem: {
-          include: { user: { select: { name: true, email: true } } },
-        },
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { id: 'desc' },
     });
 
     return claims;
@@ -128,8 +110,6 @@ export class ClaimsService {
       where: { id: claimId },
       include: {
         user: true,
-        lostItem: true,
-        foundItem: true,
       },
     });
 
@@ -143,20 +123,17 @@ export class ClaimsService {
       data: { status, message: adminMessage },
       include: {
         user: true,
-        lostItem: true,
-        foundItem: true,
       },
     });
 
     // If approved, update item status to MATCHED
     if (status === 'APPROVED') {
-      const item = claim.lostItem || claim.foundItem;
-      if (claim.lostItem) {
+      if (claim.lostItemId) {
         await this.prisma.lostItem.update({
           where: { id: claim.lostItemId! },
           data: { status: 'MATCHED' },
         });
-      } else {
+      } else if (claim.foundItemId) {
         await this.prisma.foundItem.update({
           where: { id: claim.foundItemId! },
           data: { status: 'MATCHED' },
@@ -172,7 +149,7 @@ export class ClaimsService {
     );
 
     return {
-      message: Claim ${status.toLowerCase()} successfully,
+      message: `Claim ${status.toLowerCase()} successfully`,
       claim: updatedClaim,
     };
   }

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ItemsService } from '../items/items.service';
 import { ClaimsService } from '../claims/claims.service';
-import { NotificationsService } from '../notifications/notifications.service';
+import { NotificationsService } from '../notification/notification.service';
 
 export interface AdminDashboardStats {
   totalUsers: number;
@@ -69,14 +69,8 @@ export class AdminService {
       where: { status: 'PENDING' },
       include: {
         user: { select: { id: true, name: true, email: true } },
-        lostItem: {
-          include: { user: { select: { name: true, email: true } } },
-        },
-        foundItem: {
-          include: { user: { select: { name: true, email: true } } },
-        },
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { id: 'desc' },
     });
   }
 

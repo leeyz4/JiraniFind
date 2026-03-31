@@ -2,17 +2,14 @@ import {
   Controller,
   Get,
   Post,
-  Put,
   Body,
-  Param,
   Query,
   UseGuards,
   Request,
 } from '@nestjs/common';
 import { ClaimsService } from './claims.service';
 import { CreateClaimDto } from './dto/create-claim.dto';
-import { UpdateClaimDto } from './dto/update-claim.dto';
-import { JwtAuthGuard } from '../auth/auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('claims')
 @UseGuards(JwtAuthGuard)

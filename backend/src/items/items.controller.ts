@@ -12,8 +12,8 @@ import {
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemStatusDto } from './dto/update-item.dto';
-import { JwtAuthGuard } from '../auth/auth.guard';
-import { ItemType } from './entities/item.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ItemType } from './interface/items.interface';
 
 @Controller('items')
 @UseGuards(JwtAuthGuard)

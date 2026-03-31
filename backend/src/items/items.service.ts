@@ -2,7 +2,7 @@ import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemStatusDto } from './dto/update-item.dto';
-import { ItemType, ItemEntity } from './entities/item.entity';
+import { ItemType } from './interface/items.interface';
 import { MatchingService } from './strategies/matching.strategy';
 
 @Injectable()
@@ -141,7 +141,7 @@ export class ItemsService {
     }
 
     return {
-      message: Item ${status.toLowerCase()} successfully,
+      message: `Item ${status.toLowerCase()} successfully`,
       item: updatedItem,
     };
   }

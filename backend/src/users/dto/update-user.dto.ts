@@ -9,12 +9,3 @@ export class UpdateUserDto {
   @IsOptional()
   email?: string;
 }
-
-// change-password.dto.ts
-export class ChangePasswordDto {
-  @IsString()
-  currentPassword: string;
-
-  @IsString()
-  newPassword: string;
-}

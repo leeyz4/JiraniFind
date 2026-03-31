@@ -4,7 +4,7 @@ import { ClaimsService } from './claims.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { AuthModule } from '../auth/auth.module';
 import { ItemsModule } from '../items/items.module';
-import { NotificationsModule } from '../notifications/notifications.module';
+import { NotificationsModule } from '../notification/notification.module';
 
 @Module({
   imports: [PrismaModule, AuthModule, ItemsModule, NotificationsModule],

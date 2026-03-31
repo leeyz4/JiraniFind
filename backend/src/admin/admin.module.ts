@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
-import { AdminGuard } from './guards/admin.guard';
 import { PrismaModule } from '../prisma/prisma.module';
 import { ItemsModule } from '../items/items.module';
 import { ClaimsModule } from '../claims/claims.module';
-import { NotificationsModule } from '../notifications/notifications.module';
+import { NotificationsModule } from '../notification/notification.module';
 import { AuthModule } from '../auth/auth.module';
 
 @Module({
@@ -17,7 +16,6 @@ import { AuthModule } from '../auth/auth.module';
     AuthModule,
   ],
   controllers: [AdminController],
-  providers: [AdminService, AdminGuard],
-  exports: [AdminGuard],
+  providers: [AdminService],
 })
 export class AdminModule {}

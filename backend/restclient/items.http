@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:3000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJzdWIiOiJmZTViNGNkNi04OGE2LTQ2MWYtYTNhNy00Zjg3ODhlNjAzM2YiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3NDkxNTQ0NCwiZXhwIjoxNzc1MDAxODQ0fQ.JTSsLcx9HxPcAMgQ8ETJzlZTij5e2PPkERyQeniaGus
+# REPLACE_WITH_JWT_FROM_LOGIN
+
+### Create item (LOST or FOUND — type is lowercase per ItemType enum)
+POST {{baseUrl}}/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Blue backpack",
+  "description": "Nike logo",
+  "category": "bags",
+  "location": "Nairobi CBD",
+  "dateLost": "2026-03-01T10:00:00.000Z",
+  "type": "lost"
+}
+
+### List items (optional query: type, status, category, location)
+GET {{baseUrl}}/items
+Authorization: Bearer {{token}}
+
+### List items with filters
+GET {{baseUrl}}/items?type=lost&status=APPROVED&category=bags&location=Nairobi
+Authorization: Bearer {{token}}
+
+### My items
+GET {{baseUrl}}/items/my-items
+Authorization: Bearer {{token}}
+
+### Note: there is no GET /items/:id or PATCH /items/:id in ItemsController.
+### Admin approves/rejects via admin.http (PUT /admin/items/:id/approve|reject).

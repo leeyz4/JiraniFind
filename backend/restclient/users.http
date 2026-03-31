@@ -1,0 +1,39 @@
+@baseUrl = http://localhost:3000
+@token = REPLACE_WITH_JWT_FROM_LOGIN
+
+### Profile (routes use singular "user", not "users")
+GET {{baseUrl}}/user/profile
+Authorization: Bearer {{token}}
+
+### Update profile
+PUT {{baseUrl}}/user/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Updated Name",
+  "email": "newemail@example.com"
+}
+
+### Password change step 1 — sends 6-digit OTP to email (must be logged in)
+POST {{baseUrl}}/user/password/request-change
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "secret12",
+  "newPassword": "newsecret12"
+}
+
+### Password change step 2 — code from email
+POST {{baseUrl}}/user/password/confirm-change
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "code": "123456"
+}
+
+### Activity summary
+GET {{baseUrl}}/user/activity
+Authorization: Bearer {{token}}

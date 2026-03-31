@@ -1,11 +1,5 @@
 import { IsString, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
-
-export enum NotificationType {
-  MATCH_FOUND = 'MATCH_FOUND',
-  CLAIM_STATUS = 'CLAIM_STATUS',
-  ITEM_APPROVED = 'ITEM_APPROVED',
-  CLAIM_CREATED = 'CLAIM_CREATED',
-}
+import { NotificationType } from '@prisma/client';
 
 export class CreateNotificationDto {
   @IsString()
