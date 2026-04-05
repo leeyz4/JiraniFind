@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "name": "Test User",
-  "email": "lizyt70@gmail.com",
+  "email": "user@example.com",
   "password": "secret12"
 }
 
@@ -15,7 +15,7 @@ POST {{baseUrl}}/auth/verify-email
 Content-Type: application/json
 
 {
-  "email": "lizyt70@gmail.com",
+  "email": "user@example.com",
   "code": "123456"
 }
 
@@ -24,7 +24,7 @@ POST {{baseUrl}}/auth/resend-verification
 Content-Type: application/json
 
 {
-  "email": "lizyt70@gmail.com"
+  "email": "user@example.com",
 }
 
 ### Login — only works after email is verified; copy access_token for other requests
