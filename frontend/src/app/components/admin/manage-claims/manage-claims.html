@@ -1,0 +1,131 @@
+<body>
+    <div class="app-container">
+        <header class="top-nav">
+            <div class="logo">
+                <i class="fa-solid fa-shapes"></i> JiraniFind
+            </div>
+            <div class="user-profile">
+                <i class="fa-regular fa-bell"></i>
+                <div class="profile-info">
+                    <span class="name">Alex Johnson</span>
+                    <span class="role">User</span>
+                </div>
+                <img src="https://via.placeholder.com/40" alt="Avatar" class="avatar">
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <nav class="sidebar">
+                <p class="section-title">MAIN MENU</p>
+                <ul>
+                    <li><i class="fa-solid fa-table-columns"></i> Dashboard</li>
+                    <li><i class="fa-solid fa-magnifying-glass"></i> Browse Items</li>
+                    <li><i class="fa-regular fa-file-lines"></i> My Reports</li>
+                    <li class="active"><i class="fa-regular fa-comment-dots"></i> Claims</li>
+                </ul>
+                <div class="sidebar-footer">
+                    <button class="btn-report"><i class="fa-plus-circle"></i> Report New Item</button>
+                    <a href="#" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                </div>
+            </nav>
+
+            <section class="claims-list">
+                <h2>Claim Requests</h2>
+                <p class="subtitle">Manage ownership verification requests</p>
+                
+                <div class="filter-tabs">
+                    <button class="tab active">All Claims</button>
+                    <button class="tab">Pending</button>
+                    <button class="tab">Completed</button>
+                </div>
+
+                <div class="card-list">
+                    <div class="claim-card active">
+                        <div class="card-header">
+                            <img src="https://via.placeholder.com/35" class="thumb">
+                            <div class="claimant-meta">
+                                <strong>Sarah Waters</strong>
+                                <span>2 hours ago</span>
+                            </div>
+                            <span class="badge pending"><i class="fa-regular fa-clock"></i> Awaiting Review</span>
+                        </div>
+                        <p class="snippet">"Hi, I believe this is my phone. I lost it near the Sheep Meadow..."</p>
+                        <div class="item-tag"><i class="fa-solid fa-mobile-screen"></i> IPHONE 15 PRO - NATURAL TITANIUM</div>
+                    </div>
+
+                    <div class="claim-card">
+                        <div class="card-header">
+                            <img src="https://via.placeholder.com/35" class="thumb">
+                            <div class="claimant-meta">
+                                <strong>Michael Chen</strong>
+                                <span>1 day ago</span>
+                            </div>
+                            <span class="badge verified"><i class="fa-solid fa-check"></i> Verified</span>
+                        </div>
+                        <p class="snippet">"This wallet belongs to my father. It contains his ID..."</p>
+                        <div class="item-tag"><i class="fa-solid fa-wallet"></i> LEATHER WALLET (BROWN)</div>
+                    </div>
+                </div>
+            </section>
+
+            <main class="claim-detail">
+                <div class="detail-header">
+                    <h1>Claim Review: #CL-1024</h1>
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </div>
+
+                <div class="reported-item-box">
+                    <img src="https://via.placeholder.com/60" alt="iPhone">
+                    <div class="item-info">
+                        <span class="label">YOUR REPORTED ITEM</span>
+                        <h3>iPhone 15 Pro - Natural Titanium</h3>
+                        <p><i class="fa-solid fa-location-dot"></i> Central Park North <i class="fa-regular fa-calendar"></i> March 12, 2024</p>
+                    </div>
+                    <button class="btn-outline">View Original Report <i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <div class="review-grid">
+                    <div class="claimant-statement">
+                        <div class="user-id">
+                            <img src="https://via.placeholder.com/50" class="avatar">
+                            <div>
+                                <strong>Sarah Waters <i class="fa-solid fa-circle-check" style="color: #00c3ff;"></i></strong>
+                                <p>Member since Oct 2023</p>
+                            </div>
+                        </div>
+                        <div class="bubble">
+                            <p>Hi, I believe this is my phone. I lost it near the Sheep Meadow area yesterday. It has a distinctive clear Magsafe case with a small star sticker on the bottom left corner. The lock screen is a photo of a golden retriever puppy.</p>
+                        </div>
+                        <div class="verified-details">
+                            <p class="status-title"><i class="fa-regular fa-circle-check"></i> VERIFIED DETAILS PROVIDED</p>
+                            <ul>
+                                <li>Description of MagSafe case matching original report.</li>
+                                <li>Detailed lock screen identification provided.</li>
+                                <li>Proximity to loss location confirmed.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-actions">
+                        <div class="safety-reminder">
+                            <h4>SAFETY REMINDER</h4>
+                            <p>Before approving, ensure the claimant's description matches your item precisely. Never share sensitive personal info until the claim is verified.</p>
+                            <a href="#"><i class="fa-regular fa-circle-check"></i> Safety Checklist</a>
+                        </div>
+                        <button class="btn-approve"><i class="fa-regular fa-circle-check"></i> Approve Claim</button>
+                        <button class="btn-reject"><i class="fa-regular fa-circle-xmark"></i> Reject Claim</button>
+                        <button class="btn-message"><i class="fa-regular fa-comment"></i> Message Claimant</button>
+                    </div>
+                </div>
+
+                <div class="proof-section">
+                    <h3><i class="fa-regular fa-image"></i> Proof of Ownership</h3>
+                    <div class="image-gallery">
+                        <img src="https://via.placeholder.com/250x150" alt="Proof 1">
+                        <img src="https://via.placeholder.com/250x150" alt="Proof 2">
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>

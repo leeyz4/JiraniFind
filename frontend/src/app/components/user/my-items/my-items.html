@@ -1,0 +1,132 @@
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-shapes"></i> JiraniFind
+            </div>
+            <nav>
+                <p class="nav-label">Main Menu</p>
+                <ul>
+                    <li><i class="fa-solid fa-house"></i> Dashboard</li>
+                    <li><i class="fa-solid fa-magnifying-glass"></i> Browse Items</li>
+                    <li class="active"><i class="fa-solid fa-file-invoice"></i> My Reports</li>
+                    <li><i class="fa-solid fa-comment-dots"></i> Claims</li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn-new-report"><i class="fa-solid fa-plus-circle"></i> Report New Item</button>
+                <div class="logout-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</div>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            <header class="top-navbar">
+                <div class="user-pill">
+                    <i class="fa-regular fa-bell"></i>
+                    <div class="user-details">
+                        <strong>Alex Johnson</strong><br><span>User</span>
+                    </div>
+                    <img src="https://via.placeholder.com/35" alt="User">
+                </div>
+            </header>
+
+            <div class="main-body">
+                <div class="page-intro">
+                    <div>
+                        <h1>My Reported Items</h1>
+                        <p>Manage and track the status of your reported lost or found belongings.</p>
+                    </div>
+                    <button class="btn-cyan-filled"><i class="fa-solid fa-plus"></i> New Report</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div>
+                            <p class="stat-label">TOTAL REPORTS</p>
+                            <h2 class="stat-value">05</h2>
+                            <p class="stat-sub">All-time active reports</p>
+                        </div>
+                        <i class="fa-solid fa-box-archive icon-bg"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <p class="stat-label">AWAITING APPROVAL</p>
+                            <h2 class="stat-value">02</h2>
+                            <p class="stat-sub">Pending administrator review</p>
+                        </div>
+                        <i class="fa-regular fa-clock icon-bg"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <p class="stat-label">RESOLVED</p>
+                            <h2 class="stat-value">01</h2>
+                            <p class="stat-sub">Matched and claimed</p>
+                        </div>
+                        <i class="fa-regular fa-circle-check icon-bg"></i>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Search by title or keyword...">
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="active">All</button>
+                        <button>Lost</button>
+                        <button>Found</button>
+                        <button class="btn-icon"><i class="fa-solid fa-sliders"></i></button>
+                    </div>
+                </div>
+
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <div class="card-image">
+                            <img src="https://via.placeholder.com/300x180" alt="Wallet">
+                            <span class="badge lost-matched">Lost • Matched</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <h3>Blue Leather Wallet</h3>
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </div>
+                            <p class="meta"><i class="fa-regular fa-calendar"></i> Reported on Oct 24, 2023</p>
+                            <p class="meta"><i class="fa-solid fa-location-dot"></i> Central Station</p>
+                            <p class="description">Contains ID card and some cash. Lost near the central station parking lot.</p>
+                            <div class="card-actions">
+                                <div class="edit-icons">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </div>
+                                <button class="btn-outline-cyan">View Matches</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="card-image">
+                            <img src="https://via.placeholder.com/300x180" alt="iPhone">
+                            <span class="badge found-approved">Found • Approved</span>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <h3>iPhone 13 Pro - Graphite</h3>
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </div>
+                            <p class="meta"><i class="fa-regular fa-calendar"></i> Reported on Oct 22, 2023</p>
+                            <p class="meta"><i class="fa-solid fa-location-dot"></i> Central Park</p>
+                            <p class="description">Found on a bench in Central Park. Has a clear silicon case.</p>
+                            <div class="card-actions">
+                                <div class="edit-icons">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </div>
+                                <button class="btn-outline-cyan">View Matches</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>

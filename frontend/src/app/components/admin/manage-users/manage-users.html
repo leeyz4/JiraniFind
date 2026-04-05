@@ -1,0 +1,103 @@
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">JiraniFind</div>
+        <nav>
+            <p class="section-title">MAIN MENU</p>
+            <ul>
+                <li>Dashboard</li>
+                <li>Browse Items</li>
+                <li>My Reports</li>
+                <li>Claims</li>
+            </ul>
+            <p class="section-title">ADMINISTRATION</p>
+            <ul>
+                <li>Admin Overview</li>
+                <li>Pending Review</li>
+                <li class="active">User Control</li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="management-container">
+        <header class="page-header">
+            <div>
+                <h1>User Management</h1>
+                <p class="subtitle">Manage platform users, permissions, and account statuses.</p>
+            </div>
+            <button class="btn-add-user">+ Add New User</button>
+        </header>
+
+        <section class="summary-grid">
+            <div class="summary-card">
+                <label>Total Users</label>
+                <div class="count">1,284</div>
+                <span class="trend">+12% from last month</span>
+            </div>
+            <div class="summary-card">
+                <label>Administrators</label>
+                <div class="count">12</div>
+                <span class="description">Authorized system managers</span>
+            </div>
+        </section>
+
+        <div class="table-controls">
+            <input type="text" placeholder="Search by name, email..." class="search-input">
+            <div class="filters">
+                <select><option>Role: All</option></select>
+                <select><option>Status: Active</option></select>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Role</th>
+                        <th>Joined Date</th>
+                        <th>Reports</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="avatar">MA</div>
+                            <div><strong>Marcus Aurelius</strong><br><small>marcus.a@empire.com</small></div>
+                        </td>
+                        <td>User</td>
+                        <td>Nov 12, 2023</td>
+                        <td>4 reports</td>
+                        <td><div class="toggle active"></div></td>
+                        <td class="actions">✎ 🗑 ⋮</td>
+                    </tr>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="avatar">SJ</div>
+                            <div><strong>Sarah Jenkins</strong><br><small>s.jenkins@example.com</small></div>
+                        </td>
+                        <td>User</td>
+                        <td>Jan 05, 2024</td>
+                        <td>0 reports</td>
+                        <td><div class="toggle active"></div></td>
+                        <td class="actions">✎ 🗑 ⋮</td>
+                    </tr>
+                    <tr class="suspended-row">
+                        <td class="user-cell">
+                            <div class="avatar">DC</div>
+                            <div><strong>David Chen</strong><br><small>dchen_tech@global.net</small></div>
+                        </td>
+                        <td>User</td>
+                        <td>Mar 20, 2024</td>
+                        <td>12 reports</td>
+                        <td><div class="toggle"></div></td>
+                        <td class="actions">✎ 🗑 ⋮</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>

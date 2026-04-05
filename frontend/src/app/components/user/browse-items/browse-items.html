@@ -1,0 +1,121 @@
+<body>
+    <div class="app-layout">
+        <aside class="main-sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-shapes"></i> JiraniFind
+            </div>
+            <nav>
+                <p class="menu-label">MAIN MENU</p>
+                <ul>
+                    <li><i class="fa-solid fa-table-columns"></i> Dashboard</li>
+                    <li class="active"><i class="fa-solid fa-magnifying-glass"></i> Browse Items</li>
+                    <li><i class="fa-solid fa-file-invoice"></i> My Reports</li>
+                    <li><i class="fa-solid fa-comment-dots"></i> Claims</li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn-report-nav"><i class="fa-solid fa-plus-circle"></i> Report New Item</button>
+                <div class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</div>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="top-bar">
+                <div class="user-info">
+                    <i class="fa-regular fa-bell"></i>
+                    <div class="user-text">
+                        <strong>Alex Johnson</strong><br><span>User</span>
+                    </div>
+                    <img src="https://via.placeholder.com/35" class="avatar" alt="Profile">
+                </div>
+            </header>
+
+            <main class="content">
+                <div class="page-header">
+                    <div class="header-text">
+                        <h1>Browse Reported Items</h1>
+                        <p>Search through all reported lost and found items in your community.</p>
+                    </div>
+                    <div class="view-toggle">
+                        <button class="active"><i class="fa-solid fa-grid-2"></i> Grid</button>
+                        <button><i class="fa-solid fa-list"></i> Table</button>
+                    </div>
+                </div>
+
+                <div class="search-sort-row">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Search by title, location, or description...">
+                    </div>
+                    <div class="sort-dropdown">
+                        Sort by: <select><option>Newest First</option></select>
+                    </div>
+                </div>
+
+                <div class="browse-layout">
+                    <aside class="filters-sidebar">
+                        <div class="filter-group">
+                            <label><i class="fa-solid fa-sliders"></i> Filters</label>
+                            <p class="filter-label">ITEM STATUS</p>
+                            <label class="check-item"><input type="checkbox" checked> <span class="box lost"></span> Lost Items</label>
+                            <label class="check-item"><input type="checkbox" checked> <span class="box found"></span> Found Items</label>
+                        </div>
+
+                        <div class="filter-group">
+                            <p class="filter-label">CATEGORY</p>
+                            <label class="check-item"><input type="checkbox"> Electronics</label>
+                            <label class="check-item"><input type="checkbox"> Pets</label>
+                            <label class="check-item"><input type="checkbox"> Personal</label>
+                            <label class="check-item"><input type="checkbox"> Accessories</label>
+                            <label class="check-item"><input type="checkbox"> Fashion</label>
+                            <label class="check-item"><input type="checkbox"> Documents</label>
+                        </div>
+
+                        <div class="filter-group">
+                            <p class="filter-label">TIMEFRAME</p>
+                            <select class="filter-select"><option>Anytime</option></select>
+                        </div>
+
+                        <button class="btn-reset">Reset All Filters</button>
+                    </aside>
+
+                    <section class="items-grid">
+                        <div class="item-card">
+                            <div class="card-img">
+                                <span class="status-badge lost">Lost</span>
+                                <img src="https://via.placeholder.com/300x180" alt="MacBook">
+                            </div>
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <h3>Space Gray MacBook Pro 14"</h3>
+                                    <span class="category-tag">Electronics</span>
+                                </div>
+                                <p class="loc"><i class="fa-solid fa-location-dot"></i> Central Library, Level 3</p>
+                                <p class="date"><i class="fa-regular fa-calendar"></i> 2024-05-12</p>
+                                <p class="desc">"Left in a black sleeve near the quiet study zone..."</p>
+                                <button class="btn-action">I found this <i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="item-card">
+                            <div class="card-img">
+                                <span class="status-badge found">Found</span>
+                                <img src="https://via.placeholder.com/300x180" alt="Dog">
+                            </div>
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <h3>Golden Retriever Mix (Buddy)</h3>
+                                    <span class="category-tag">Pets</span>
+                                </div>
+                                <p class="loc"><i class="fa-solid fa-location-dot"></i> Riverside Park West</p>
+                                <p class="date"><i class="fa-regular fa-calendar"></i> 2024-05-14</p>
+                                <p class="desc">"Friendly male dog found wandering without a collar..."</p>
+                                <button class="btn-action primary">This is mine <i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>

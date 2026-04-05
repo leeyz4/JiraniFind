@@ -1,0 +1,106 @@
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="logo-icon"></div>
+            <span>JiraniFind</span>
+        </div>
+        
+        <nav>
+            <p class="section-title">MAIN MENU</p>
+            <ul>
+                <li class="active">Dashboard</li>
+                <li>Browse Items</li>
+                <li>My Reports</li>
+                <li>Claims</li>
+            </ul>
+
+            <p class="section-title">ADMINISTRATION</p>
+            <ul>
+                <li>Admin Overview</li>
+                <li>Pending Review</li>
+                <li>User Control</li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="btn-report">Report New Item</button>
+            <div class="logout">Logout</div>
+        </div>
+    </aside>
+
+    <main class="dashboard-container">
+        <header class="main-header">
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p class="subtitle">Overview of system health and pending moderation tasks.</p>
+            </div>
+            <div class="header-tools">
+                <span class="date-picker">May 20, 2024</span>
+                <button class="btn-filter">Filters</button>
+                <button class="btn-export">Export PDF</button>
+            </div>
+        </header>
+
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <label>Total Reports</label>
+                <div class="value">2,845</div>
+                <span class="trend positive">+12.5% from last 7 days</span>
+            </div>
+            <div class="metric-card">
+                <label>Pending Review</label>
+                <div class="value">142</div>
+                <span class="trend positive">+8.2% from last 7 days</span>
+            </div>
+            <div class="metric-card">
+                <label>Pending Claims</label>
+                <div class="value">64</div>
+                <span class="trend negative">-3.1% from last 7 days</span>
+            </div>
+            <div class="metric-card">
+                <label>Active Users</label>
+                <div class="value">1,208</div>
+                <span class="trend positive">+24.0% from last 7 days</span>
+            </div>
+        </section>
+
+        <div class="content-split">
+            <section class="table-section">
+                <div class="section-header">
+                    <h3>Moderation Queue</h3>
+                    <a href="#">View All Queue</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Reported Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>ITM-9021</td><td>MacBook Pro 14"</td><td>Electronics</td><td>2024-05-20</td><td><span class="badge">Pending</span></td></tr>
+                        <tr><td>ITM-9022</td><td>Leather Wallet</td><td>Personal Items</td><td>2024-05-19</td><td><span class="badge">Pending</span></td></tr>
+                        <tr><td>ITM-9023</td><td>Passport - Blue</td><td>Documents</td><td>2024-05-19</td><td><span class="badge">Pending</span></td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <aside class="actions-panel">
+                <h3>Recent Admin Actions</h3>
+                <div class="timeline-item">
+                    <p><strong>Sarah Miller</strong> suspended user ID #4421</p>
+                    <small>2 hours ago</small>
+                </div>
+                <div class="timeline-item">
+                    <p><strong>David Chen</strong> approved Claim #CL-882</p>
+                    <small>4 hours ago</small>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+</body>

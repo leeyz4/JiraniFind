@@ -1,0 +1,114 @@
+:root {
+    --primary: #00d4ff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --bg: #f8fafc;
+    --white: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+}
+
+.simple-nav {
+    padding: 20px 40px;
+    background: var(--white);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.logo {
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.verify-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
+}
+
+.verify-card {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: 440px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+.icon-header {
+    width: 64px;
+    height: 64px;
+    background: #eefcff;
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.5rem;
+}
+
+h1 { font-size: 1.5rem; color: var(--text-main); margin-bottom: 10px; }
+p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 30px; }
+
+.code-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.code-group input {
+    width: 48px;
+    height: 56px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.code-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.timer { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 30px; }
+
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.help-link { font-size: 0.85rem; margin-top: 20px; }
+.help-link a { color: var(--primary); text-decoration: none; font-weight: 500; }
+
+.security-tag {
+    margin-top: 25px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding: 8px 20px;
+    background: var(--white);
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+}

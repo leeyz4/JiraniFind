@@ -1,0 +1,98 @@
+<body>
+    <div class="admin-wrapper">
+        <aside class="sidebar">
+            <div class="logo">JiraniFind</div>
+            <nav>
+                <div class="menu-label">MAIN MENU</div>
+                <ul>
+                    <li><i class="fa-solid fa-table-columns"></i> Dashboard</li>
+                    <li><i class="fa-solid fa-magnifying-glass"></i> Browse Items</li>
+                </ul>
+                <div class="menu-label">ADMINISTRATION</div>
+                <ul>
+                    <li><i class="fa-solid fa-shield"></i> Admin Overview</li>
+                    <li class="active"><i class="fa-regular fa-clock"></i> Pending Review</li>
+                    <li><i class="fa-solid fa-users"></i> User Control</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h2>Pending Review</h2>
+                <div class="admin-user">
+                    <i class="fa-regular fa-bell"></i>
+                    <span>Alex Johnson <strong>User</strong></span>
+                    <img src="https://via.placeholder.com/32" class="avatar">
+                </div>
+            </header>
+
+            <div class="table-controls">
+                <button class="btn-filter"><i class="fa-solid fa-sliders"></i> Filters</button>
+                <div class="search-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search submissions...">
+                </div>
+            </div>
+
+            <div class="table-area">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>Image</th>
+                            <th>Item Details</th>
+                            <th>Reporter</th>
+                            <th>Submitted</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="selected-row">
+                            <td><input type="checkbox" checked></td>
+                            <td><img src="https://via.placeholder.com/40" class="row-thumb"></td>
+                            <td>
+                                <div class="item-main">iPhone 15 Pro Max - Silver</div>
+                                <div class="item-sub">Electronics • ITEM-8801</div>
+                            </td>
+                            <td>Michael Chen</td>
+                            <td>May 20, 10:30 AM</td>
+                            <td class="action-icons">
+                                <i class="fa-solid fa-circle-xmark reject"></i>
+                                <i class="fa-solid fa-circle-check approve"></i>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+        </main>
+
+        <aside class="detail-sidebar">
+            <div class="preview-header">QUICK PREVIEW</div>
+            <div class="preview-card">
+                <div class="status-badge found">Found</div>
+                <img src="https://via.placeholder.com/260x180" class="hero-img">
+                <h3>iPhone 15 Pro Max - Silver</h3>
+                <div class="meta-grid">
+                    <div><label>REPORTED</label><span>5/20/2024</span></div>
+                    <div><label>LOCATION</label><span>Central Park North</span></div>
+                </div>
+                <div class="preview-actions">
+                    <button class="btn-reject">Reject</button>
+                    <button class="btn-approve">Approve</button>
+                </div>
+            </div>
+            
+            <div class="audit-trail">
+                <h4>Recent Audit Trail</h4>
+                <div class="audit-item">
+                    <img src="https://via.placeholder.com/24">
+                    <div class="audit-info">
+                        <strong>Alex Johnson</strong> Approved
+                        <p>Target: ITEM-8799 • 5m ago</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</body>

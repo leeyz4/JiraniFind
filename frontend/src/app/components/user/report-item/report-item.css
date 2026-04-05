@@ -1,0 +1,152 @@
+:root {
+    --primary: #00d4ff;
+    --bg: #f9fbff;
+    --border: #eef2f6;
+    --text-main: #333;
+    --text-muted: #7e8b9a;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+}
+
+.app-container { display: flex; height: 100vh; }
+
+/* Reusing Sidebar Styles */
+.sidebar {
+    width: 260px;
+    background: white;
+    border-right: 1px solid var(--border);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo { color: var(--primary); font-weight: bold; margin-bottom: 40px; }
+.sidebar li { list-style: none; padding: 12px 15px; color: var(--text-muted); cursor: pointer; }
+
+.btn-sidebar-active {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--primary);
+    background: #eefcff;
+    color: var(--primary);
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+/* Main Content Area */
+.content-area { flex: 1; overflow-y: auto; }
+.top-nav { display: flex; justify-content: flex-end; padding: 15px 40px; background: white; }
+.user-pill { display: flex; align-items: center; gap: 10px; }
+.user-pill .avatar { border-radius: 50%; width: 35px; }
+
+/* Form Layout */
+.form-container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+.form-container h1 { font-size: 1.8rem; margin-bottom: 8px; }
+.subtitle { color: var(--text-muted); margin-bottom: 40px; }
+
+/* Stepper */
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+    gap: 15px;
+}
+.step { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 0.8rem; }
+.step.disabled { color: var(--text-muted); }
+.step .circle {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+.step.active .circle { border-color: var(--primary); color: var(--primary); }
+.line { width: 100px; height: 2px; background: var(--border); margin-bottom: 25px; }
+
+/* Form Card */
+.form-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.form-group { margin-bottom: 25px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 10px; font-size: 0.95rem; }
+
+.toggle-group { display: flex; gap: 10px; }
+.toggle-btn {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    background: #f1f4f7;
+    color: var(--text-main);
+    cursor: pointer;
+    font-weight: 500;
+}
+.toggle-btn.active { background: var(--primary); color: white; }
+
+input[type="text"], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.tags-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0 10px;
+}
+.tags-input input { border: none; }
+
+.tag-pills { display: flex; gap: 8px; margin-top: 8px; }
+.tag {
+    background: #f1f4f7;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    color: var(--text-main);
+}
+
+textarea { height: 120px; resize: none; }
+.helper-text { font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; display: block; }
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.btn-back { background: none; border: 1px solid var(--border); padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+.btn-next { background: var(--primary); color: white; border: none; padding: 10px 25px; border-radius: 6px; cursor: pointer; }
+
+/* Info Banner */
+.info-banner {
+    margin-top: 20px;
+    background: white;
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+.info-banner i { color: var(--text-main); margin-top: 4px; }
+.info-banner p { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
