@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { Home } from './components/landing/home/home';
 import { Login } from './components/auth/login/login';
 import { Register } from './components/auth/register/register';
 import { Verify } from './components/auth/verify/verify';
@@ -14,7 +15,8 @@ import { UserDashboard } from './components/user/user-dashboard/user-dashboard';
 
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'home', component: Home },
     { path: 'login', component: Login },
     { path: 'register', component: Register },
     { path: 'verify', component: Verify },
