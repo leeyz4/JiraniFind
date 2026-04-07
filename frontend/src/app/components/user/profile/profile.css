@@ -7,7 +7,7 @@
     --text-light: #7e8b9a;
 }
 
-body { margin: 0; font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); }
+.profile-page { margin: 0; font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); min-height: 100vh; }
 .app-container { display: flex; }
 
 /* Content Area */

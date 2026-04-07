@@ -1,14 +1,14 @@
-<body>
+<div class="manage-claims-page">
     <div class="app-container">
         <header class="top-nav">
-            <div class="logo">
+            <a routerLink="/home" class="logo">
                 <i class="fa-solid fa-shapes"></i> JiraniFind
-            </div>
+            </a>
             <div class="user-profile">
                 <i class="fa-regular fa-bell"></i>
                 <div class="profile-info">
-                    <span class="name">Alex Johnson</span>
-                    <span class="role">User</span>
+                    <span class="name">{{ userName() }}</span>
+                    <span class="role">Admin</span>
                 </div>
                 <img src="https://via.placeholder.com/40" alt="Avatar" class="avatar">
             </div>
@@ -18,14 +18,14 @@
             <nav class="sidebar">
                 <p class="section-title">MAIN MENU</p>
                 <ul>
-                    <li><i class="fa-solid fa-table-columns"></i> Dashboard</li>
-                    <li><i class="fa-solid fa-magnifying-glass"></i> Browse Items</li>
-                    <li><i class="fa-regular fa-file-lines"></i> My Reports</li>
-                    <li class="active"><i class="fa-regular fa-comment-dots"></i> Claims</li>
+                    <li routerLink="/admin-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fa-solid fa-table-columns"></i> Dashboard</li>
+                    <li routerLink="/pending-items" routerLinkActive="active"><i class="fa-solid fa-magnifying-glass"></i> Browse Items</li>
+                    <li routerLink="/manage-claims" routerLinkActive="active"><i class="fa-regular fa-file-lines"></i> My Reports</li>
+                    <li routerLink="/manage-claims"><i class="fa-regular fa-comment-dots"></i> Claims</li>
                 </ul>
                 <div class="sidebar-footer">
-                    <button class="btn-report"><i class="fa-plus-circle"></i> Report New Item</button>
-                    <a href="#" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                    <a routerLink="/report-item" class="btn-report"><i class="fa-plus-circle"></i> Report New Item</a>
+                    <button type="button" class="logout" (click)="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
                 </div>
             </nav>
 
@@ -34,9 +34,9 @@
                 <p class="subtitle">Manage ownership verification requests</p>
                 
                 <div class="filter-tabs">
-                    <button class="tab active">All Claims</button>
-                    <button class="tab">Pending</button>
-                    <button class="tab">Completed</button>
+                    <button type="button" class="tab active">All Claims</button>
+                    <button type="button" class="tab">Pending</button>
+                    <button type="button" class="tab">Completed</button>
                 </div>
 
                 <div class="card-list">
@@ -81,7 +81,7 @@
                         <h3>iPhone 15 Pro - Natural Titanium</h3>
                         <p><i class="fa-solid fa-location-dot"></i> Central Park North <i class="fa-regular fa-calendar"></i> March 12, 2024</p>
                     </div>
-                    <button class="btn-outline">View Original Report <i class="fa-solid fa-chevron-right"></i></button>
+                    <button type="button" class="btn-outline">View Original Report <i class="fa-solid fa-chevron-right"></i></button>
                 </div>
 
                 <div class="review-grid">
@@ -112,9 +112,9 @@
                             <p>Before approving, ensure the claimant's description matches your item precisely. Never share sensitive personal info until the claim is verified.</p>
                             <a href="#"><i class="fa-regular fa-circle-check"></i> Safety Checklist</a>
                         </div>
-                        <button class="btn-approve"><i class="fa-regular fa-circle-check"></i> Approve Claim</button>
-                        <button class="btn-reject"><i class="fa-regular fa-circle-xmark"></i> Reject Claim</button>
-                        <button class="btn-message"><i class="fa-regular fa-comment"></i> Message Claimant</button>
+                        <button type="button" class="btn-approve"><i class="fa-regular fa-circle-check"></i> Approve Claim</button>
+                        <button type="button" class="btn-reject"><i class="fa-regular fa-circle-xmark"></i> Reject Claim</button>
+                        <button type="button" class="btn-message"><i class="fa-regular fa-comment"></i> Message Claimant</button>
                     </div>
                 </div>
 
@@ -128,4 +128,4 @@
             </main>
         </div>
     </div>
-</body>
+</div>

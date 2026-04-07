@@ -1,12 +1,12 @@
-<body>
+<div class="home-page">
 
     <nav class="navbar">
-        <div class="logo">JiraniFind</div>
+        <a routerLink="/home" class="logo">JiraniFind</a>
         <div class="nav-links">
-            <a href="#about">About</a>
-            <a href="#business">For Business</a>
-            <a href="#support">Support</a>
-            <button class="btn-get-started">Get Started</button>
+            <a routerLink="/home" fragment="about">About</a>
+            <a routerLink="/home" fragment="business">For Business</a>
+            <a routerLink="/home" fragment="support">Support</a>
+            <a routerLink="/register" class="btn-get-started">Get Started</a>
         </div>
     </nav>
 
@@ -14,17 +14,19 @@
         <div class="hero-content">
             <span class="badge">A safer way to recover items</span>
             <h1>Find What's <span class="cyan-text">Lost</span>,<br>Claim What's <span class="cyan-text">Found</span>.</h1>
-            <p>JiraniFind is your local community network dedicated to reuniting people with their precious belongings through instant alerts and secure community messaging.</p>
-            <div class="hero-actions">
-                <button class="btn-cyan">Get Started Now</button>
-                <button class="btn-outline">Learn More</button>
+            <div class="par">
+              <p>JiraniFind is your local community network dedicated to reuniting people with their precious belongings through instant alerts and secure community messaging.</p>
             </div>
-            <div class="user-avatars">
+            <div class="hero-actions">
+                <a routerLink="/register" class="btn-cyan">Get Started Now</a>
+                <button type="button" class="btn-outline" (click)="scrollTo('why-us')">Learn More</button>
+            </div>
+            <!-- <div class="user-avatars">
                 <div class="avatar-stack">
                     <div class="avatar"></div><div class="avatar"></div><div class="avatar"></div>
                 </div>
                 <span>Join 50k+ neighbors today</span>
-            </div>
+            </div> -->
         </div>
         <div class="hero-visual">
             <div class="main-photo"></div>
@@ -38,9 +40,9 @@
             </div>
         </div>
     </header>
-
-    <section class="stats-section">
-        <h3>Building Trusting Communities</h3>
+  <div class="stat-why">
+    <section class="stats-section" id="about">
+        <h2>Building Trusting Communities</h2>
         <p class="section-subtext">The numbers speak for themselves. Join the most reliable network in your neighborhood.</p>
         <div class="stats-grid">
             <div class="stat-card"><h2>98%</h2><p>Recovery Rate</p></div>
@@ -50,7 +52,8 @@
         </div>
     </section>
 
-    <section class="why-us">
+    <section class="why">
+      <div class="why-us" id="why-us">
         <div class="why-content">
             <h2>Why JiraniFind?</h2>
             <p>We've created a platform built on trust and speed. Our tools ensure your items are found faster and returned safely. Unlike social media groups, JiraniFind is built for lost and found. Our platform verifies users and structures listings to ensure items are returned to their rightful owners quickly and safely.</p>
@@ -65,10 +68,16 @@
         <div class="why-image">
             <div class="phone-mockup"></div>
         </div>
+      </div>
     </section>
+    </div>
 
-    <section class="features">
-        <h2>How We Help You</h2>
+    <section class="features" id="business">
+        <div class="how">
+           <h2>How We Help You</h2>
+           <p>Comprehensive tools designed to make the process of recovering items seamless and stress-free for everyone involved.</p>
+        </div>
+     
         <div class="features-grid">
             <div class="f-card">
                 <div class="f-icon">📄</div>
@@ -93,47 +102,73 @@
         </div>
     </section>
 
-    <section class="contact-section">
+    <section class="contact-section" id="support">
         <div class="contact-details">
             <h2>Get in Touch</h2>
             <p>Have questions? Reach out to our friendly team for any assistance or inquiries.</p>
             <div class="contact-links">
-                <p>📧 hello@jiranifind.com</p>
-                <p>📞 +254 700 000 000</p>
-                <p>📍 Westlands, Nairobi, KE</p>
+                <div class="cont-icon">
+                    <p>📧</p>
+                </div>
+                <div class="email">
+                    <strong>Email Us</strong>
+                    <p>jiranifind@gmail.com</p>
+                </div>
             </div>
+             <div class="contact-links">
+                <div class="cont-icon">
+                    <p>📞 </p>
+                </div>
+                <div class="email">
+                    <strong>Call Us</strong>
+                    <p>+254 700 000 000</p>
+                </div>
+            </div>
+             <div class="contact-links">
+                <div class="cont-icon">
+                    <p>📍 </p>
+                </div>
+                <div class="email">
+                    <strong>Visit Headquarters</strong>
+                    <p>CBD, Nairobi, KE</p>
+                </div>
+            </div>
+            
             <div class="map-box">
                 <div class="map-overlay">📍</div>
             </div>
         </div>
         <div class="contact-form">
             <h3>Send a Message</h3>
-            <form>
+            <p>Fill out the form below and we will respond within 24hrs.</p>
+            <form (submit)="$event.preventDefault()">
                 <div class="form-row">
                     <input type="text" placeholder="First Name">
                     <input type="text" placeholder="Last Name">
                 </div>
                 <input type="email" placeholder="Email Address">
-                <select><option>Subject: General Inquiry</option></select>
+                <!-- <select><option>Subject: General Inquiry</option></select> -->
                 <textarea placeholder="How can we help your neighborhood?"></textarea>
                 <button type="submit" class="btn-cyan full">Send Message</button>
             </form>
         </div>
     </section>
 
-    <section class="cta-banner">
+    <section class="cta">
+      <div class="cta-banner">
         <h2>Ready to Help Your Neighborhood Thrive?</h2>
         <p>Join thousands of neighbors today. Protect your belongings and help others find peace of mind.</p>
         <div class="cta-buttons">
-            <button class="btn-dark">Join JiraniFind Now</button>
-            <button class="btn-outline-dark">Watch Success Stories</button>
+            <a routerLink="/register" class="btn-outline-dark">Join JiraniFind Now</a>
+            <button type="button" class="btn-outline-dark" (click)="scrollTo('why-us')">Watch Success Stories</button>
         </div>
+      </div>
     </section>
 
     <footer class="footer">
         <div class="footer-top">
             <div class="footer-brand">
-                <div class="logo">JiraniFind</div>
+                <a routerLink="/home" class="logo">JiraniFind</a>
                 <p>Connecting neighborhoods and helping people find what matters most since 2024.</p>
                 <div class="socials">
                     <span class="soc"></span><span class="soc"></span><span class="soc"></span>
@@ -142,18 +177,24 @@
             <div class="footer-nav">
                 <div class="footer-col">
                     <h5>Quick Links</h5>
-                    <a href="#">About Us</a><a href="#">Careers</a><a href="#">Contact</a>
+                     <a routerLink="/home" fragment="about">Home</a>
+                    <a routerLink="/home" fragment="about">About Us</a>
+                    <a href="#">Careers</a>
+                    <a routerLink="/home" fragment="support">Contact</a>
                 </div>
                 <div class="footer-col">
                     <h5>Community</h5>
-                    <a href="#">Safety</a><a href="#">Privacy</a><a href="#">Terms</a>
+                    <a href="#">Safety Guidelines</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Success Stories</a>
                 </div>
                 <div class="footer-col">
                     <h5>Newsletter</h5>
-                    <p>Get safety updates.</p>
+                    <p>Stay updated with community alerts.</p>
                     <div class="newsletter">
                         <input type="text" placeholder="Email">
-                        <button>➔</button>
+                        <button type="button" aria-label="Subscribe">➔</button>
                     </div>
                 </div>
             </div>
@@ -163,4 +204,4 @@
         </div>
     </footer>
 
-</body>
+</div>

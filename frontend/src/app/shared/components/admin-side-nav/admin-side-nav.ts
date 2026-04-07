@@ -1,20 +1,16 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Auth } from '../../../core/services/auth';
 
 @Component({
-  selector: 'app-manage-claims',
+  selector: 'app-admin-side-nav',
   imports: [RouterLink, RouterLinkActive],
-  templateUrl: './manage-claims.html',
-  styleUrls: ['./manage-claims.css'],
+  templateUrl: './admin-side-nav.html',
+  styleUrl: './admin-side-nav.css',
 })
-export class ManageClaims {
+export class AdminSideNav {
   private readonly auth = inject(Auth);
   private readonly router = inject(Router);
-
-  protected readonly userName = computed(
-    () => this.auth.currentUser()?.name ?? 'Admin',
-  );
 
   protected logout(): void {
     this.auth.logout();

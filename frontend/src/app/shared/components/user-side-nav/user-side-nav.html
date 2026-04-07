@@ -1,0 +1,33 @@
+<aside class="main-sidebar">
+    <a routerLink="/home" class="logo">
+        <i class="fa-solid fa-shapes"></i> JiraniFind
+    </a>
+    <nav>
+        <p class="menu-label">MAIN MENU</p>
+        <ul>
+            <li
+                routerLink="/user-dashboard"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+                <i class="fa-solid fa-table-columns"></i> Dashboard
+            </li>
+            <li routerLink="/browse-items" routerLinkActive="active">
+                <i class="fa-solid fa-magnifying-glass"></i> Browse Items
+            </li>
+            <li routerLink="/my-items" routerLinkActive="active">
+                <i class="fa-solid fa-file-invoice"></i> My Reports
+            </li>
+            <!-- <li routerLink="/browse-items">
+                <i class="fa-solid fa-comment-dots"></i> Claims
+            </li> -->
+        </ul>
+    </nav>
+    <div class="sidebar-footer">
+        <a routerLink="/report-item" class="btn-report-nav">
+            <i class="fa-solid fa-plus-circle"></i> Report New Item
+        </a>
+        <button type="button" class="logout" (click)="logout()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+    </div>
+</aside>

@@ -8,7 +8,7 @@ import { ItemsModule } from './items/items.module';
 import { AdminModule } from './admin/admin.module';
 import { NotificationsModule } from './notification/notification.module';
 import { ClaimsModule } from './claims/claims.module';
-import { MailerModule } from './mailer/mailer.module';
+// import { MailerModule } from './mailer/mailer.module';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
@@ -21,7 +21,7 @@ import { PrismaModule } from './prisma/prisma.module';
     AdminModule,
     NotificationsModule,
     ClaimsModule,
-    MailerModule,
+    // MailerModule,
     PrismaModule,
   ],
   controllers: [AppController],

@@ -1,34 +1,19 @@
-<body>
+<div class="pending-page">
     <div class="admin-wrapper">
-        <aside class="sidebar">
-            <div class="logo">JiraniFind</div>
-            <nav>
-                <div class="menu-label">MAIN MENU</div>
-                <ul>
-                    <li><i class="fa-solid fa-table-columns"></i> Dashboard</li>
-                    <li><i class="fa-solid fa-magnifying-glass"></i> Browse Items</li>
-                </ul>
-                <div class="menu-label">ADMINISTRATION</div>
-                <ul>
-                    <li><i class="fa-solid fa-shield"></i> Admin Overview</li>
-                    <li class="active"><i class="fa-regular fa-clock"></i> Pending Review</li>
-                    <li><i class="fa-solid fa-users"></i> User Control</li>
-                </ul>
-            </nav>
-        </aside>
+        <app-admin-side-nav />
 
         <main class="main-content">
             <header class="content-header">
                 <h2>Pending Review</h2>
                 <div class="admin-user">
                     <i class="fa-regular fa-bell"></i>
-                    <span>Alex Johnson <strong>User</strong></span>
+                    <span>{{ userName() }} <strong>Admin</strong></span>
                     <img src="https://via.placeholder.com/32" class="avatar">
                 </div>
             </header>
 
             <div class="table-controls">
-                <button class="btn-filter"><i class="fa-solid fa-sliders"></i> Filters</button>
+                <button type="button" class="btn-filter"><i class="fa-solid fa-sliders"></i> Filters</button>
                 <div class="search-wrap">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" placeholder="Search submissions...">
@@ -78,8 +63,8 @@
                     <div><label>LOCATION</label><span>Central Park North</span></div>
                 </div>
                 <div class="preview-actions">
-                    <button class="btn-reject">Reject</button>
-                    <button class="btn-approve">Approve</button>
+                    <button type="button" class="btn-reject">Reject</button>
+                    <button type="button" class="btn-approve">Approve</button>
                 </div>
             </div>
             
@@ -95,4 +80,4 @@
             </div>
         </aside>
     </div>
-</body>
+</div>

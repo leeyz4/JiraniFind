@@ -1,31 +1,31 @@
-<body>
+<div class="admin-dashboard-page">
 
     <aside class="sidebar">
-        <div class="brand">
+        <a routerLink="/home" class="brand">
             <div class="logo-icon"></div>
             <span>JiraniFind</span>
-        </div>
-        
+        </a>
+
         <nav>
             <p class="section-title">MAIN MENU</p>
             <ul>
-                <li class="active">Dashboard</li>
-                <li>Browse Items</li>
-                <li>My Reports</li>
-                <li>Claims</li>
+                <li routerLink="/admin-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</li>
+                <li routerLink="/pending-items" routerLinkActive="active">Browse Items</li>
+                <li routerLink="/manage-claims" routerLinkActive="active">My Reports</li>
+                <li routerLink="/manage-claims">Claims</li>
             </ul>
 
             <p class="section-title">ADMINISTRATION</p>
             <ul>
-                <li>Admin Overview</li>
-                <li>Pending Review</li>
-                <li>User Control</li>
+                <li routerLink="/admin-dashboard">Admin Overview</li>
+                <li routerLink="/pending-items" routerLinkActive="active">Pending Review</li>
+                <li routerLink="/manage-users" routerLinkActive="active">User Control</li>
             </ul>
         </nav>
 
         <div class="sidebar-footer">
-            <button class="btn-report">Report New Item</button>
-            <div class="logout">Logout</div>
+            <a routerLink="/report-item" class="btn-report">Report New Item</a>
+            <button type="button" class="logout" (click)="logout()">Logout</button>
         </div>
     </aside>
 
@@ -33,12 +33,12 @@
         <header class="main-header">
             <div>
                 <h1>Admin Dashboard</h1>
-                <p class="subtitle">Overview of system health and pending moderation tasks.</p>
+                <p class="subtitle">Overview of system health and pending moderation tasks. Signed in as {{ userName() }}.</p>
             </div>
             <div class="header-tools">
                 <span class="date-picker">May 20, 2024</span>
-                <button class="btn-filter">Filters</button>
-                <button class="btn-export">Export PDF</button>
+                <button type="button" class="btn-filter">Filters</button>
+                <button type="button" class="btn-export">Export PDF</button>
             </div>
         </header>
 
@@ -69,7 +69,7 @@
             <section class="table-section">
                 <div class="section-header">
                     <h3>Moderation Queue</h3>
-                    <a href="#">View All Queue</a>
+                    <a routerLink="/pending-items">View All Queue</a>
                 </div>
                 <table>
                     <thead>
@@ -103,4 +103,4 @@
         </div>
     </main>
 
-</body>
+</div>

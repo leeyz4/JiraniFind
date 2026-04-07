@@ -1,0 +1,93 @@
+:host {
+    display: contents;
+}
+
+.sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: #fff;
+    height: 100vh;
+    border-right: 1px solid #e2e8f0;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.brand {
+    color: #00bcd4;
+    font-weight: 800;
+    font-size: 18px;
+    margin-bottom: 32px;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-heading {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: bold;
+    margin: 20px 0 8px;
+    letter-spacing: 0.05em;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    padding: 12px;
+    color: #64748b;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar li.active {
+    background: #f0fdff;
+    color: #00bcd4;
+    font-weight: bold;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-report {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #00bcd4;
+    border-radius: 8px;
+    color: #00bcd4;
+    text-decoration: none;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+}
+
+.logout-btn {
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+    font: inherit;
+    cursor: pointer;
+    color: #334155;
+}
+
+.logout-btn:hover {
+    border-color: #00bcd4;
+    color: #00bcd4;
+}

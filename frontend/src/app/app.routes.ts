@@ -12,21 +12,59 @@ import { MyItems } from './components/user/my-items/my-items';
 import { Profile } from './components/user/profile/profile';
 import { ReportItem } from './components/user/report-item/report-item';
 import { UserDashboard } from './components/user/user-dashboard/user-dashboard';
-
+import { authGuard } from './core/guards/auth-guard';
+import { adminGuard } from './core/guards/admin-guard';
+import { guestGuard } from './core/guards/guest-guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: 'home', component: Home },
-    { path: 'login', component: Login },
-    { path: 'register', component: Register },
-    { path: 'verify', component: Verify },
-    { path: 'admin-dashboard', component: AdminDashboard },
-    { path: 'manage-claims', component: ManageClaims },
-    { path: 'manage-users', component: ManageUsers },
-    { path: 'pending-items', component: PendingItems },
-    { path: 'browse-items', component: BrowseItems },
-    { path: 'my-items', component: MyItems },
-    { path: 'profile', component: Profile },
-    { path: 'report-item', component: ReportItem },
-    { path: 'user-dashboard', component: UserDashboard },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: Home },
+  { path: 'login', component: Login, canActivate: [guestGuard] },
+  { path: 'register', component: Register, canActivate: [guestGuard] },
+  { path: 'verify', component: Verify },
+  {
+    path: 'admin-dashboard',
+    component: AdminDashboard,
+    canActivate: [authGuard, adminGuard],
+  },
+  {
+    path: 'manage-claims',
+    component: ManageClaims,
+    canActivate: [authGuard, adminGuard],
+  },
+  {
+    path: 'manage-users',
+    component: ManageUsers,
+    canActivate: [authGuard, adminGuard],
+  },
+  {
+    path: 'pending-items',
+    component: PendingItems,
+    canActivate: [authGuard, adminGuard],
+  },
+  {
+    path: 'browse-items',
+    component: BrowseItems,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'my-items',
+    component: MyItems,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'profile',
+    component: Profile,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'report-item',
+    component: ReportItem,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'user-dashboard',
+    component: UserDashboard,
+    canActivate: [authGuard],
+  },
 ];

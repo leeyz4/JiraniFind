@@ -6,10 +6,46 @@
     --white: #ffffff;
 }
 
-body {
+.verify-page {
     margin: 0;
+    min-height: 100vh;
     font-family: 'Inter', sans-serif;
     background-color: var(--bg);
+}
+
+.verify-error,
+.verify-warning {
+    color: #b45309;
+    font-size: 14px;
+    margin: 12px 0;
+    text-align: center;
+}
+
+.verify-error {
+    color: #c62828;
+}
+
+.simple-nav .logo {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button.linkish {
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    font: inherit;
+    text-decoration: underline;
+    padding: 0;
+}
+
+button.linkish:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    text-decoration: none;
 }
 
 .simple-nav {

@@ -1,30 +1,13 @@
-<body>
+<div class="my-items-page">
     <div class="app-container">
-        <aside class="sidebar">
-            <div class="logo">
-                <i class="fa-solid fa-shapes"></i> JiraniFind
-            </div>
-            <nav>
-                <p class="nav-label">Main Menu</p>
-                <ul>
-                    <li><i class="fa-solid fa-house"></i> Dashboard</li>
-                    <li><i class="fa-solid fa-magnifying-glass"></i> Browse Items</li>
-                    <li class="active"><i class="fa-solid fa-file-invoice"></i> My Reports</li>
-                    <li><i class="fa-solid fa-comment-dots"></i> Claims</li>
-                </ul>
-            </nav>
-            <div class="sidebar-footer">
-                <button class="btn-new-report"><i class="fa-solid fa-plus-circle"></i> Report New Item</button>
-                <div class="logout-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</div>
-            </div>
-        </aside>
+        <app-user-side-nav />
 
         <main class="content-area">
             <header class="top-navbar">
                 <div class="user-pill">
                     <i class="fa-regular fa-bell"></i>
                     <div class="user-details">
-                        <strong>Alex Johnson</strong><br><span>User</span>
+                        <strong>{{ userName() }}</strong><br><span>User</span>
                     </div>
                     <img src="https://via.placeholder.com/35" alt="User">
                 </div>
@@ -36,7 +19,7 @@
                         <h1>My Reported Items</h1>
                         <p>Manage and track the status of your reported lost or found belongings.</p>
                     </div>
-                    <button class="btn-cyan-filled"><i class="fa-solid fa-plus"></i> New Report</button>
+                    <button type="button" class="btn-cyan-filled"><i class="fa-solid fa-plus"></i> New Report</button>
                 </div>
 
                 <div class="stats-grid">
@@ -46,7 +29,7 @@
                             <h2 class="stat-value">05</h2>
                             <p class="stat-sub">All-time active reports</p>
                         </div>
-                        <i class="fa-solid fa-box-archive icon-bg"></i>
+                        <i class="fa-solid fa-cube"></i>
                     </div>
                     <div class="stat-card">
                         <div>
@@ -54,7 +37,7 @@
                             <h2 class="stat-value">02</h2>
                             <p class="stat-sub">Pending administrator review</p>
                         </div>
-                        <i class="fa-regular fa-clock icon-bg"></i>
+                       <i class="fa-regular fa-clock"></i>
                     </div>
                     <div class="stat-card">
                         <div>
@@ -62,7 +45,7 @@
                             <h2 class="stat-value">01</h2>
                             <p class="stat-sub">Matched and claimed</p>
                         </div>
-                        <i class="fa-regular fa-circle-check icon-bg"></i>
+                        <i class="fa-regular fa-circle-check"></i>
                     </div>
                 </div>
 
@@ -72,10 +55,12 @@
                         <input type="text" placeholder="Search by title or keyword...">
                     </div>
                     <div class="filter-buttons">
-                        <button class="active">All</button>
-                        <button>Lost</button>
-                        <button>Found</button>
-                        <button class="btn-icon"><i class="fa-solid fa-sliders"></i></button>
+                        <div class="btn-item">
+                          <button type="button" class="btn-items">All</button>
+                          <button type="button" class="btn2">Lost</button>
+                          <button type="button" class="btn3">Found</button>
+                        </div>
+                        <button type="button" class="btn-icon"><i class="fa-solid fa-sliders"></i></button>
                     </div>
                 </div>
 
@@ -98,7 +83,7 @@
                                     <i class="fa-solid fa-pen"></i>
                                     <i class="fa-solid fa-trash-can"></i>
                                 </div>
-                                <button class="btn-outline-cyan">View Matches</button>
+                                <button type="button" class="btn-outline-cyan">View Matches</button>
                             </div>
                         </div>
                     </div>
@@ -121,7 +106,7 @@
                                     <i class="fa-solid fa-pen"></i>
                                     <i class="fa-solid fa-trash-can"></i>
                                 </div>
-                                <button class="btn-outline-cyan">View Matches</button>
+                                <button type="button" class="btn-outline-cyan">View Matches</button>
                             </div>
                         </div>
                     </div>
@@ -129,4 +114,4 @@
             </div>
         </main>
     </div>
-</body>
+</div>

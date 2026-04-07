@@ -1,30 +1,13 @@
-<body>
+<div class="browse-page">
     <div class="app-layout">
-        <aside class="main-sidebar">
-            <div class="logo">
-                <i class="fa-solid fa-shapes"></i> JiraniFind
-            </div>
-            <nav>
-                <p class="menu-label">MAIN MENU</p>
-                <ul>
-                    <li><i class="fa-solid fa-table-columns"></i> Dashboard</li>
-                    <li class="active"><i class="fa-solid fa-magnifying-glass"></i> Browse Items</li>
-                    <li><i class="fa-solid fa-file-invoice"></i> My Reports</li>
-                    <li><i class="fa-solid fa-comment-dots"></i> Claims</li>
-                </ul>
-            </nav>
-            <div class="sidebar-footer">
-                <button class="btn-report-nav"><i class="fa-solid fa-plus-circle"></i> Report New Item</button>
-                <div class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</div>
-            </div>
-        </aside>
+        <app-user-side-nav />
 
         <div class="main-wrapper">
             <header class="top-bar">
                 <div class="user-info">
                     <i class="fa-regular fa-bell"></i>
                     <div class="user-text">
-                        <strong>Alex Johnson</strong><br><span>User</span>
+                        <strong>{{ userName() }}</strong><br><span>User</span>
                     </div>
                     <img src="https://via.placeholder.com/35" class="avatar" alt="Profile">
                 </div>
@@ -37,8 +20,8 @@
                         <p>Search through all reported lost and found items in your community.</p>
                     </div>
                     <div class="view-toggle">
-                        <button class="active"><i class="fa-solid fa-grid-2"></i> Grid</button>
-                        <button><i class="fa-solid fa-list"></i> Table</button>
+                        <button type="button" class="active"><i class="fa-solid fa-grid-2"></i> Grid</button>
+                        <button type="button"><i class="fa-solid fa-list"></i> Table</button>
                     </div>
                 </div>
 
@@ -48,7 +31,11 @@
                         <input type="text" placeholder="Search by title, location, or description...">
                     </div>
                     <div class="sort-dropdown">
-                        Sort by: <select><option>Newest First</option></select>
+                        Sort by: <select>
+                            <option>New Reports</option>
+                            <option>Older Reports</option>
+                            <option>Week Old</option>
+                        </select>
                     </div>
                 </div>
 
@@ -67,7 +54,7 @@
                             <label class="check-item"><input type="checkbox"> Pets</label>
                             <label class="check-item"><input type="checkbox"> Personal</label>
                             <label class="check-item"><input type="checkbox"> Accessories</label>
-                            <label class="check-item"><input type="checkbox"> Fashion</label>
+                            <!-- <label class="check-item"><input type="checkbox"> Fashion</label> -->
                             <label class="check-item"><input type="checkbox"> Documents</label>
                         </div>
 
@@ -76,7 +63,7 @@
                             <select class="filter-select"><option>Anytime</option></select>
                         </div>
 
-                        <button class="btn-reset">Reset All Filters</button>
+                        <button type="button" class="btn-reset">Reset All Filters</button>
                     </aside>
 
                     <section class="items-grid">
@@ -93,7 +80,7 @@
                                 <p class="loc"><i class="fa-solid fa-location-dot"></i> Central Library, Level 3</p>
                                 <p class="date"><i class="fa-regular fa-calendar"></i> 2024-05-12</p>
                                 <p class="desc">"Left in a black sleeve near the quiet study zone..."</p>
-                                <button class="btn-action">I found this <i class="fa-solid fa-chevron-right"></i></button>
+                                <button type="button" class="btn-action">I found this <i class="fa-solid fa-chevron-right"></i></button>
                             </div>
                         </div>
 
@@ -110,7 +97,7 @@
                                 <p class="loc"><i class="fa-solid fa-location-dot"></i> Riverside Park West</p>
                                 <p class="date"><i class="fa-regular fa-calendar"></i> 2024-05-14</p>
                                 <p class="desc">"Friendly male dog found wandering without a collar..."</p>
-                                <button class="btn-action primary">This is mine <i class="fa-solid fa-chevron-right"></i></button>
+                                <button type="button" class="btn-action">This is mine <i class="fa-solid fa-chevron-right"></i></button>
                             </div>
                         </div>
                     </section>
@@ -118,4 +105,4 @@
             </main>
         </div>
     </div>
-</body>
+</div>
