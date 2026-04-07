@@ -1,34 +1,52 @@
 <div class="manage-users-page">
+    <div class="admin-wrapper">
+      <app-admin-side-nav />
 
-    <app-admin-side-nav />
+      <main class="management-container">
+        <header class="top-bar">
+                <div class="user-info">
+                    <i class="fa-regular fa-bell"></i>
+                    <div class="user-text">
+                        <strong>System Admin</strong><br><span>User</span>
+                    </div>
+                    <img src="https://via.placeholder.com/35" class="avatar" alt="Profile">
+                </div>
+            </header> 
 
-    <main class="management-container">
         <header class="page-header">
             <div>
                 <h1>User Management</h1>
                 <p class="subtitle">Manage platform users, permissions, and account statuses.</p>
             </div>
-            <button type="button" class="btn-add-user">+ Add New User</button>
+            <!-- <button type="button" class="btn-add-user">+ Add New User</button> -->
         </header>
 
         <section class="summary-grid">
             <div class="summary-card">
                 <label>Total Users</label>
-                <div class="count">1,284</div>
+                <div class="count">{{ users().length }}</div>
                 <span class="trend">+12% from last month</span>
             </div>
             <div class="summary-card">
                 <label>Administrators</label>
-                <div class="count">12</div>
+                <div class="count">{{ adminCount() }}</div>
                 <span class="description">Authorized system managers</span>
             </div>
         </section>
 
         <div class="table-controls">
-            <input type="text" placeholder="Search by name, email..." class="search-input">
+            <input type="text" placeholder="Search by name, email..." class="search-input" [value]="searchTerm()" (input)="setSearch($any($event.target).value)">
             <div class="filters">
-                <select><option>Role: All</option></select>
-                <select><option>Status: Active</option></select>
+                <select (change)="setRole($any($event.target).value)">
+                  <option value="ALL">Role: All</option>
+                  <option value="USER">Role: User</option>
+                  <option value="ADMIN">Role: Admin</option>
+                </select>
+                <select (change)="setStatus($any($event.target).value)">
+                  <option value="ALL">Status: All</option>
+                  <option value="VERIFIED">Status: Verified</option>
+                  <option value="UNVERIFIED">Status: Unverified</option>
+                </select>
             </div>
         </div>
 
@@ -45,42 +63,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngIf="loading()"><td colspan="6">Loading users...</td></tr>
+                    <tr *ngFor="let user of filteredUsers()">
                         <td class="user-cell">
-                            <div class="avatar">MA</div>
-                            <div><strong>Marcus Aurelius</strong><br><small>marcus.a@empire.com</small></div>
+                            <div class="avatar">{{ user.name.slice(0, 2).toUpperCase() }}</div>
+                            <div><strong>{{ user.name }}</strong><br><small>{{ user.email }}</small></div>
                         </td>
-                        <td>User</td>
-                        <td>Nov 12, 2023</td>
-                        <td>4 reports</td>
-                        <td><div class="toggle active"></div></td>
-                        <td class="actions">✎ 🗑 ⋮</td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="avatar">SJ</div>
-                            <div><strong>Sarah Jenkins</strong><br><small>s.jenkins@example.com</small></div>
-                        </td>
-                        <td>User</td>
-                        <td>Jan 05, 2024</td>
-                        <td>0 reports</td>
-                        <td><div class="toggle active"></div></td>
-                        <td class="actions">✎ 🗑 ⋮</td>
-                    </tr>
-                    <tr class="suspended-row">
-                        <td class="user-cell">
-                            <div class="avatar">DC</div>
-                            <div><strong>David Chen</strong><br><small>dchen_tech@global.net</small></div>
-                        </td>
-                        <td>User</td>
-                        <td>Mar 20, 2024</td>
-                        <td>12 reports</td>
-                        <td><div class="toggle"></div></td>
+                        <td>{{ user.role }}</td>
+                        <td>{{ user.createdAt.slice(0, 10) }}</td>
+                        <td>{{ user._count.lostItems + user._count.foundItems }} reports</td>
+                        <td><div class="toggle" [class.active]="user.isVerified"></div></td>
                         <td class="actions">✎ 🗑 ⋮</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </main>
-
+  </div>
 </div>

@@ -10,24 +10,19 @@
                 <i class="fa-solid fa-table-columns"></i> Dashboard
             </li>
             <li routerLink="/pending-items" routerLinkActive="active">
-                <i class="fa-solid fa-magnifying-glass"></i> Browse Items
+                <i class="fa-solid fa-magnifying-glass"></i> Pending Reviews
+            </li>
+            <li routerLink="/manage-users" routerLinkActive="active">
+                <i class="fa-regular fa-file-lines"></i> Manage Users
             </li>
             <li routerLink="/manage-claims" routerLinkActive="active">
-                <i class="fa-regular fa-file-lines"></i> My Reports
+                <i class="fa-regular fa-comment-dots"></i> Manage Claims
             </li>
-            <li routerLink="/manage-claims">
-                <i class="fa-regular fa-comment-dots"></i> Claims
-            </li>
-        </ul>
-        <p class="nav-heading">ADMINISTRATION</p>
-        <ul>
-            <li routerLink="/admin-dashboard">Admin Overview</li>
-            <li routerLink="/pending-items" routerLinkActive="active">Pending Review</li>
-            <li routerLink="/manage-users" routerLinkActive="active">User Control</li>
         </ul>
     </nav>
-    <div class="sidebar-bottom">
-        <a routerLink="/report-item" class="btn-report">Report New Item</a>
-        <button type="button" class="logout-btn" (click)="logout()">Logout</button>
+    <div class="sidebar-footer">
+        <button type="button" class="logout" (click)="logout()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
     </div>
 </aside>

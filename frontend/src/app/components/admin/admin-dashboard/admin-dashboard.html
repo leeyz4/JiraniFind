@@ -1,67 +1,50 @@
 <div class="admin-dashboard-page">
-
-    <aside class="sidebar">
-        <a routerLink="/home" class="brand">
-            <div class="logo-icon"></div>
-            <span>JiraniFind</span>
-        </a>
-
-        <nav>
-            <p class="section-title">MAIN MENU</p>
-            <ul>
-                <li routerLink="/admin-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</li>
-                <li routerLink="/pending-items" routerLinkActive="active">Browse Items</li>
-                <li routerLink="/manage-claims" routerLinkActive="active">My Reports</li>
-                <li routerLink="/manage-claims">Claims</li>
-            </ul>
-
-            <p class="section-title">ADMINISTRATION</p>
-            <ul>
-                <li routerLink="/admin-dashboard">Admin Overview</li>
-                <li routerLink="/pending-items" routerLinkActive="active">Pending Review</li>
-                <li routerLink="/manage-users" routerLinkActive="active">User Control</li>
-            </ul>
-        </nav>
-
-        <div class="sidebar-footer">
-            <a routerLink="/report-item" class="btn-report">Report New Item</a>
-            <button type="button" class="logout" (click)="logout()">Logout</button>
-        </div>
-    </aside>
+    <div class="admin-wrapper">
+      <app-admin-side-nav />
 
     <main class="dashboard-container">
-        <header class="main-header">
+         <header class="top-bar">
+                <div class="user-info">
+                    <i class="fa-regular fa-bell"></i>
+                    <div class="user-text">
+                        <strong>{{ userName() }}</strong><br><span>User</span>
+                    </div>
+                    <img src="https://via.placeholder.com/35" class="avatar" alt="Profile">
+                </div>
+            </header>
+            
+        <main class="main-header">
             <div>
                 <h1>Admin Dashboard</h1>
                 <p class="subtitle">Overview of system health and pending moderation tasks. Signed in as {{ userName() }}.</p>
             </div>
-            <div class="header-tools">
+            <!-- <div class="header-tools">
                 <span class="date-picker">May 20, 2024</span>
-                <button type="button" class="btn-filter">Filters</button>
+                <button type="button" class="btn-filter" (click)="loadDashboard()">Refresh</button>
                 <button type="button" class="btn-export">Export PDF</button>
-            </div>
-        </header>
+            </div> -->
+        </main>
 
         <section class="metrics-grid">
             <div class="metric-card">
                 <label>Total Reports</label>
-                <div class="value">2,845</div>
-                <span class="trend positive">+12.5% from last 7 days</span>
+                <div class="value">{{ (dashboard()?.stats?.pendingItems || 0) + (dashboard()?.stats?.approvedItems || 0) }}</div>
+                <span class="trend positive">Live moderation totals</span>
             </div>
             <div class="metric-card">
                 <label>Pending Review</label>
-                <div class="value">142</div>
-                <span class="trend positive">+8.2% from last 7 days</span>
+                <div class="value">{{ dashboard()?.stats?.pendingItems || 0 }}</div>
+                <span class="trend positive">Awaiting admin action</span>
             </div>
             <div class="metric-card">
                 <label>Pending Claims</label>
-                <div class="value">64</div>
-                <span class="trend negative">-3.1% from last 7 days</span>
+                <div class="value">{{ dashboard()?.stats?.pendingClaims || 0 }}</div>
+                <span class="trend negative">Needs claim review</span>
             </div>
             <div class="metric-card">
                 <label>Active Users</label>
-                <div class="value">1,208</div>
-                <span class="trend positive">+24.0% from last 7 days</span>
+                <div class="value">{{ dashboard()?.stats?.totalUsers || 0 }}</div>
+                <span class="trend positive">Registered users</span>
             </div>
         </section>
 
@@ -82,25 +65,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>ITM-9021</td><td>MacBook Pro 14"</td><td>Electronics</td><td>2024-05-20</td><td><span class="badge">Pending</span></td></tr>
-                        <tr><td>ITM-9022</td><td>Leather Wallet</td><td>Personal Items</td><td>2024-05-19</td><td><span class="badge">Pending</span></td></tr>
-                        <tr><td>ITM-9023</td><td>Passport - Blue</td><td>Documents</td><td>2024-05-19</td><td><span class="badge">Pending</span></td></tr>
+                        @if (loading()) {
+                          <tr><td colspan="5">Loading dashboard...</td></tr>
+                        } @else {
+                        @for (item of (dashboard()?.pendingItems?.lostItems || []).slice(0, 3); track item.id) {
+                          <tr><td>{{ item.id.slice(0, 8) }}</td><td>{{ item.title }}</td><td>{{ item.category }}</td><td>{{ item.createdAt?.slice(0, 10) }}</td><td><span class="badge">Pending</span></td></tr>
+                        }
+                        @for (item of (dashboard()?.pendingItems?.foundItems || []).slice(0, 3); track item.id) {
+                          <tr><td>{{ item.id.slice(0, 8) }}</td><td>{{ item.title }}</td><td>{{ item.category }}</td><td>{{ item.createdAt?.slice(0, 10) }}</td><td><span class="badge">Pending</span></td></tr>
+                        }
+                        }
                     </tbody>
                 </table>
             </section>
 
-            <aside class="actions-panel">
+            <!-- <aside class="actions-panel">
                 <h3>Recent Admin Actions</h3>
+                @for (claim of (dashboard()?.pendingClaims || []).slice(0, 5); track claim.id) {
                 <div class="timeline-item">
-                    <p><strong>Sarah Miller</strong> suspended user ID #4421</p>
-                    <small>2 hours ago</small>
+                    <p><strong>{{ claim.user?.name || 'User' }}</strong> submitted claim {{ claim.id.slice(0, 8) }}</p>
+                    <small>{{ claim.status }}</small>
                 </div>
-                <div class="timeline-item">
-                    <p><strong>David Chen</strong> approved Claim #CL-882</p>
-                    <small>4 hours ago</small>
-                </div>
-            </aside>
+                }
+            </aside> -->
         </div>
     </main>
-
+  </div>
 </div>

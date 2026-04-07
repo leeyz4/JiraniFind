@@ -5,7 +5,7 @@
         <main class="content-area">
             <header class="top-navbar">
                 <div class="user-pill">
-                    <i class="fa-regular fa-bell"></i>
+                    <!-- <i class="fa-regular fa-bell"></i> -->
                     <div class="user-details">
                         <strong>{{ userName() }}</strong><br><span>User</span>
                     </div>
@@ -19,97 +19,94 @@
                         <h1>My Reported Items</h1>
                         <p>Manage and track the status of your reported lost or found belongings.</p>
                     </div>
-                    <button type="button" class="btn-cyan-filled"><i class="fa-solid fa-plus"></i> New Report</button>
+                    <a routerLink="/report-item" class="btn-cyan-filled"><i class="fa-solid fa-plus"></i> New Report</a>
                 </div>
 
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div>
                             <p class="stat-label">TOTAL REPORTS</p>
-                            <h2 class="stat-value">05</h2>
+                            <h2 class="stat-value">{{ totalReports() }}</h2>
                             <p class="stat-sub">All-time active reports</p>
                         </div>
-                        <i class="fa-solid fa-cube"></i>
+                        <!-- <i class="fa-solid fa-cube"></i> -->
                     </div>
                     <div class="stat-card">
                         <div>
                             <p class="stat-label">AWAITING APPROVAL</p>
-                            <h2 class="stat-value">02</h2>
+                            <h2 class="stat-value">{{ awaitingApprovalCount() }}</h2>
                             <p class="stat-sub">Pending administrator review</p>
                         </div>
-                       <i class="fa-regular fa-clock"></i>
+                       <!-- <i class="fa-regular fa-clock"></i> -->
                     </div>
                     <div class="stat-card">
                         <div>
                             <p class="stat-label">RESOLVED</p>
-                            <h2 class="stat-value">01</h2>
+                            <h2 class="stat-value">{{ resolvedCount() }}</h2>
                             <p class="stat-sub">Matched and claimed</p>
                         </div>
-                        <i class="fa-regular fa-circle-check"></i>
+                        <!-- <i class="fa-regular fa-circle-check"></i> -->
                     </div>
                 </div>
 
                 <div class="action-bar">
                     <div class="search-box">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" placeholder="Search by title or keyword...">
+                        <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
+                        <input
+                          type="text"
+                          placeholder="Search by title, location, category..."
+                          [value]="searchTerm()"
+                          (input)="setSearchTerm($any($event.target).value)">
                     </div>
                     <div class="filter-buttons">
                         <div class="btn-item">
-                          <button type="button" class="btn-items">All</button>
-                          <button type="button" class="btn2">Lost</button>
-                          <button type="button" class="btn3">Found</button>
+                          <button type="button" class="btn-items" [class.active]="filterType() === 'all'" (click)="setFilterType('all')">All</button>
+                          <button type="button" class="btn2" [class.active]="filterType() === 'lost'" (click)="setFilterType('lost')">Lost</button>
+                          <button type="button" class="btn3" [class.active]="filterType() === 'found'" (click)="setFilterType('found')">Found</button>
                         </div>
-                        <button type="button" class="btn-icon"><i class="fa-solid fa-sliders"></i></button>
+                        <button type="button" class="btn-icon">
+                            <!-- <i class="fa-solid fa-sliders"></i> -->
+                        </button>
                     </div>
                 </div>
 
                 <div class="reports-grid">
+                    @if (loading()) {
+                      <p>Loading your reports...</p>
+                    } @else if (errorMessage()) {
+                      <p>{{ errorMessage() }}</p>
+                    } @else if (filteredItems().length === 0) {
+                      <p>No reports yet. Submit one from the Report Item page.</p>
+                    } @else {
+                    @for (item of filteredItems(); track item.id) {
                     <div class="report-card">
                         <div class="card-image">
-                            <img src="https://via.placeholder.com/300x180" alt="Wallet">
-                            <span class="badge lost-matched">Lost • Matched</span>
+                            <img [src]="item.imageUrl || 'https://via.placeholder.com/300x180'" alt="item">
+                            <span class="badge" [class]="itemBadgeClass(item)">{{ itemBadgeLabel(item) }}</span>
                         </div>
                         <div class="card-info">
                             <div class="card-header">
-                                <h3>Blue Leather Wallet</h3>
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                <h3>{{ item.title }}</h3>
+                                <!-- <i class="fa-solid fa-ellipsis-vertical"></i> -->
                             </div>
-                            <p class="meta"><i class="fa-regular fa-calendar"></i> Reported on Oct 24, 2023</p>
-                            <p class="meta"><i class="fa-solid fa-location-dot"></i> Central Station</p>
-                            <p class="description">Contains ID card and some cash. Lost near the central station parking lot.</p>
+                            <p class="meta">
+                                <!-- <i class="fa-regular fa-calendar"></i>  -->
+                                Reported on {{ item.createdAt?.slice(0, 10) }}</p>
+                            <p class="meta">
+                                <!-- <i class="fa-solid fa-location-dot"></i>  -->
+                                {{ item.location }}</p>
+                            <p class="description">{{ item.description || 'No extra description provided.' }}</p>
                             <div class="card-actions">
                                 <div class="edit-icons">
-                                    <i class="fa-solid fa-pen"></i>
-                                    <i class="fa-solid fa-trash-can"></i>
+                                    <!-- <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-solid fa-trash-can"></i> -->
                                 </div>
                                 <button type="button" class="btn-outline-cyan">View Matches</button>
                             </div>
                         </div>
                     </div>
-
-                    <div class="report-card">
-                        <div class="card-image">
-                            <img src="https://via.placeholder.com/300x180" alt="iPhone">
-                            <span class="badge found-approved">Found • Approved</span>
-                        </div>
-                        <div class="card-info">
-                            <div class="card-header">
-                                <h3>iPhone 13 Pro - Graphite</h3>
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </div>
-                            <p class="meta"><i class="fa-regular fa-calendar"></i> Reported on Oct 22, 2023</p>
-                            <p class="meta"><i class="fa-solid fa-location-dot"></i> Central Park</p>
-                            <p class="description">Found on a bench in Central Park. Has a clear silicon case.</p>
-                            <div class="card-actions">
-                                <div class="edit-icons">
-                                    <i class="fa-solid fa-pen"></i>
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </div>
-                                <button type="button" class="btn-outline-cyan">View Matches</button>
-                            </div>
-                        </div>
-                    </div>
+                    }
+                    }
                 </div>
             </div>
         </main>

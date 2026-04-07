@@ -1,3 +1,10 @@
- <main>
-    <router-outlet></router-outlet>
-  </main>
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+@if (uiToast.current(); as toast) {
+  <div class="global-toast" [class.success]="toast.type === 'success'" [class.error]="toast.type === 'error'">
+    <span>{{ toast.message }}</span>
+    <button type="button" (click)="uiToast.clear()">x</button>
+  </div>
+}

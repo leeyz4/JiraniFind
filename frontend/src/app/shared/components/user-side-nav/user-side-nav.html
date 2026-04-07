@@ -17,15 +17,12 @@
             <li routerLink="/my-items" routerLinkActive="active">
                 <i class="fa-solid fa-file-invoice"></i> My Reports
             </li>
-            <!-- <li routerLink="/browse-items">
-                <i class="fa-solid fa-comment-dots"></i> Claims
-            </li> -->
+            <li routerLink="/report-item" routerLinkActive="active">
+                <i class="fa-solid fa-plus-circle"></i> Report New Item
+           </li>
         </ul>
     </nav>
     <div class="sidebar-footer">
-        <a routerLink="/report-item" class="btn-report-nav">
-            <i class="fa-solid fa-plus-circle"></i> Report New Item
-        </a>
         <button type="button" class="logout" (click)="logout()">
             <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
         </button>

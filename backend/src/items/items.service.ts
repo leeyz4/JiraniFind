@@ -4,12 +4,14 @@ import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemStatusDto } from './dto/update-item.dto';
 import { ItemType } from './interface/items.interface';
 import { MatchingService } from './strategies/matching.strategy';
+import { NotificationsService } from '../notification/notification.service';
 
 @Injectable()
 export class ItemsService {
   constructor(
     private prisma: PrismaService,
     private matchingService: MatchingService,
+    private notificationsService: NotificationsService,
   ) {}
 
   async create(createItemDto: CreateItemDto, userId: string) {
@@ -59,12 +61,17 @@ export class ItemsService {
     };
   }
 
-  async findAll(type?: ItemType, status?: string, category?: string, location?: string) {
-    const where: any = { status: { not: 'REJECTED' } };
+  async findAll(
+    type?: ItemType,
+    status?: string,
+    category?: string,
+    location?: string,
+    keyword?: string,
+  ) {
+    const where: any = {
+      status: status ?? 'APPROVED',
+    };
 
-    if (type) {
-      where.type = type;
-    }
     if (status) {
       where.status = status;
     }
@@ -74,15 +81,21 @@ export class ItemsService {
     if (location) {
       where.location = { contains: location, mode: 'insensitive' };
     }
+    if (keyword) {
+      where.OR = [
+        { title: { contains: keyword, mode: 'insensitive' } },
+        { description: { contains: keyword, mode: 'insensitive' } },
+      ];
+    }
 
     const [lostItems, foundItems] = await Promise.all([
       this.prisma.lostItem.findMany({
-        where,
+        where: type && type !== ItemType.LOST ? { id: '__none__' } : where,
         include: { user: { select: { name: true, email: true } } },
         orderBy: { createdAt: 'desc' },
       }),
       this.prisma.foundItem.findMany({
-        where,
+        where: type && type !== ItemType.FOUND ? { id: '__none__' } : where,
         include: { user: { select: { name: true, email: true } } },
         orderBy: { createdAt: 'desc' },
       }),
@@ -137,6 +150,10 @@ export class ItemsService {
 
     // Trigger matching if approved
     if (status === 'APPROVED') {
+      await this.notificationsService.sendItemApprovedNotification(
+        updatedItem.userId,
+        updatedItem.title,
+      );
       await this.matchingService.checkMatches(updatedItem);
     }
 

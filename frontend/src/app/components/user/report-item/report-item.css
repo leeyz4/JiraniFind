@@ -103,14 +103,18 @@
     padding: 10px 25px;
     border: none;
     border-radius: 6px;
-    background: #f1f4f7;
-    color: var(--text-main);
+    background: #f5f6f6;
+    color: #111;
     cursor: pointer;
     font-weight: 500;
 }
 
 .toggle-btn:hover {
     background: #00d4ff;
+}
+.toggle-btn:active {
+    background: #f5f6f6;
+    color: #111;
 }
 
 input, select, textarea {
@@ -123,7 +127,7 @@ input, select, textarea {
 
 /* .tags-input input { border: 1px solid #7e8b9a; border-radius: 6px; padding: 5px 10px; } */
 
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
 
 .tags-input {
     display: flex;
@@ -145,17 +149,19 @@ input, select, textarea {
 
 textarea { height: 120px; resize: none; }
 .helper-text { font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; display: block; }
+.success-text { color: #15803d; font-weight: 600; }
+.error-text { color: #b91c1c; font-weight: 600; }
 
-.form-footer {
+/* .form-footer {
     display: flex;
     justify-content: space-between;
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid var(--border);
-}
+} */
 
-.btn-back { background: none; border: 1px solid var(--border); padding: 10px 20px; border-radius: 6px; cursor: pointer; }
-.btn-next { background: var(--primary); color: white; border: none; padding: 10px 25px; border-radius: 6px; cursor: pointer; }
+/* .btn-back { background: none; border: 1px solid var(--border); padding: 10px 20px; border-radius: 6px; cursor: pointer; } */
+/* .btn-next { background: var(--primary); color: white; border: none; padding: 10px 25px; border-radius: 6px; cursor: pointer; } */
 
 /* Info Banner */
 .info-banner {
@@ -170,3 +176,25 @@ textarea { height: 120px; resize: none; }
 }
 .info-banner i { color: var(--text-main); margin-top: 4px; }
 .info-banner p { font-size: 0.85rem; color: #7e8b9a; margin-top: 5px; }
+
+.submit-strip {
+    margin-top: 16px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 14px;
+    position: sticky;
+    bottom: 12px;
+}
+
+.btn-submit-large {
+    width: 20%;
+    padding: 14px 20px;
+    background: #00d4ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+}

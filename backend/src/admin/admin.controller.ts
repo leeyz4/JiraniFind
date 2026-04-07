@@ -8,9 +8,12 @@ import {
   UseGuards,
   Request,
   ParseUUIDPipe,
+  Query,
 } from '@nestjs/common';
 import { AdminService, AdminDashboardStats } from './admin.service';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Roles } from '../auth/decorators/roles.decorators';
 import {
   UpdateItemStatusDto,
   UpdateClaimStatusDto,
@@ -19,7 +22,8 @@ import { ItemsService } from '../items/items.service';
 import { ClaimsService } from '../claims/claims.service';
 
 @Controller('admin')
-@UseGuards(RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('ADMIN')
 export class AdminController {
   constructor(
     private readonly adminService: AdminService,
@@ -67,8 +71,8 @@ export class AdminController {
 
   // === CLAIMS MANAGEMENT ===
   @Get('pending-claims')
-  getPendingClaims() {
-    return this.adminService.getPendingClaims();
+  getPendingClaims(@Query('status') status?: 'PENDING' | 'APPROVED' | 'REJECTED') {
+    return this.adminService.getPendingClaims(status);
   }
 
   @Put('claims/:id/approve')

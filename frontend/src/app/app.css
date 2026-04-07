@@ -1,0 +1,33 @@
+.global-toast {
+  position: fixed;
+  right: 16px;
+  top: 16px;
+  z-index: 9999;
+  background: #0f172a;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-width: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+}
+
+.global-toast.success {
+  background: #166534;
+}
+
+.global-toast.error {
+  background: #b91c1c;
+}
+
+.global-toast button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}

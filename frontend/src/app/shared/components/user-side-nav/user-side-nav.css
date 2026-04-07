@@ -59,22 +59,6 @@
     padding-top: 20px;
 }
 
-.btn-report-nav {
-    width: 100%;
-    padding: 12px;
-    border: 1.5px solid var(--primary-cyan, #00d4ff);
-    background: transparent;
-    color: var(--primary-cyan, #00d4ff);
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-    box-sizing: border-box;
-    font: inherit;
-}
-
 .logout {
     margin-top: 15px;
     color: #ef4444;

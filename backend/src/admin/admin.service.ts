@@ -64,14 +64,57 @@ export class AdminService {
     return { lostItems, foundItems };
   }
 
-  async getPendingClaims() {
-    return this.prisma.claim.findMany({
-      where: { status: 'PENDING' },
+  async getPendingClaims(status?: 'PENDING' | 'APPROVED' | 'REJECTED') {
+    const claims = await this.prisma.claim.findMany({
+      where: { status: status ?? 'PENDING' },
       include: {
         user: { select: { id: true, name: true, email: true } },
       },
       orderBy: { id: 'desc' },
     });
+
+    const enriched = await Promise.all(
+      claims.map(async (claim) => {
+        const lostItem = claim.lostItemId
+          ? await this.prisma.lostItem.findUnique({
+              where: { id: claim.lostItemId },
+              select: {
+                id: true,
+                title: true,
+                category: true,
+                location: true,
+                dateLost: true,
+                imageUrl: true,
+                status: true,
+                userId: true,
+                createdAt: true,
+              },
+            })
+          : null;
+        const foundItem = claim.foundItemId
+          ? await this.prisma.foundItem.findUnique({
+              where: { id: claim.foundItemId },
+              select: {
+                id: true,
+                title: true,
+                category: true,
+                location: true,
+                dateFound: true,
+                imageUrl: true,
+                status: true,
+                userId: true,
+                createdAt: true,
+              },
+            })
+          : null;
+        return {
+          ...claim,
+          lostItem,
+          foundItem,
+        };
+      }),
+    );
+    return enriched;
   }
 
   async getAllUsers() {
@@ -81,6 +124,7 @@ export class AdminService {
         name: true,
         email: true,
         role: true,
+        isVerified: true,
         createdAt: true,
         _count: {
           select: {

@@ -3,22 +3,33 @@
         <app-admin-side-nav />
 
         <main class="main-content">
+            <!-- <header class="top-bar">
+                <div class="user-info">
+                    <i class="fa-regular fa-bell"></i>
+                    <div class="user-text">
+                        <strong>{{ userName() }}</strong><br><span>User</span>
+                    </div>
+                    <img src="https://via.placeholder.com/35" class="avatar" alt="Profile">
+                </div>
+            </header> -->
+
             <header class="content-header">
                 <h2>Pending Review</h2>
-                <div class="admin-user">
-                    <i class="fa-regular fa-bell"></i>
-                    <span>{{ userName() }} <strong>Admin</strong></span>
-                    <img src="https://via.placeholder.com/32" class="avatar">
-                </div>
             </header>
 
             <div class="table-controls">
-                <button type="button" class="btn-filter"><i class="fa-solid fa-sliders"></i> Filters</button>
+                <button type="button" class="btn-filter" (click)="loadPendingItems()"><i class="fa-solid fa-rotate"></i> Refresh</button>
                 <div class="search-wrap">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search submissions...">
+                    <input
+                      type="text"
+                      placeholder="Search submissions..."
+                      [value]="searchTerm()"
+                      (input)="setSearchTerm($any($event.target).value)">
                 </div>
             </div>
+            <p class="flash error" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+            <p class="flash success" *ngIf="successMessage()">{{ successMessage() }}</p>
 
             <div class="table-area">
                 <table>
@@ -33,51 +44,60 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="selected-row">
-                            <td><input type="checkbox" checked></td>
-                            <td><img src="https://via.placeholder.com/40" class="row-thumb"></td>
+                        <tr *ngIf="loading()"><td colspan="6">Loading pending items...</td></tr>
+                        <tr *ngIf="!loading() && filteredItems().length === 0"><td colspan="6">No pending items found.</td></tr>
+                        <tr *ngFor="let item of filteredItems()" [class.selected-row]="selectedId() === item.id" (click)="selectItem(item.id)">
+                            <td><input type="checkbox" [checked]="selectedId() === item.id"></td>
+                            <td><img [src]="item.imageUrl || 'https://via.placeholder.com/40'" class="row-thumb"></td>
                             <td>
-                                <div class="item-main">iPhone 15 Pro Max - Silver</div>
-                                <div class="item-sub">Electronics • ITEM-8801</div>
+                                <div class="item-main">{{ item.title }}</div>
+                                <div class="item-sub">{{ item.category }} • {{ item.itemType.toUpperCase() }}</div>
                             </td>
-                            <td>Michael Chen</td>
-                            <td>May 20, 10:30 AM</td>
+                            <td>{{ item.user?.name || 'Unknown' }}</td>
+                            <td>{{ item.createdAt?.slice(0, 10) }}</td>
                             <td class="action-icons">
-                                <i class="fa-solid fa-circle-xmark reject"></i>
-                                <i class="fa-solid fa-circle-check approve"></i>
+                                <button type="button" class="icon-btn reject" (click)="reject(item.id); $event.stopPropagation()">
+                                  <i class="fa-solid fa-circle-xmark"></i>
+                                </button>
+                                <button type="button" class="icon-btn approve" (click)="approve(item.id); $event.stopPropagation()">
+                                  <i class="fa-solid fa-circle-check"></i>
+                                </button>
                             </td>
                         </tr>
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
         </main>
 
         <aside class="detail-sidebar">
             <div class="preview-header">QUICK PREVIEW</div>
-            <div class="preview-card">
-                <div class="status-badge found">Found</div>
-                <img src="https://via.placeholder.com/260x180" class="hero-img">
-                <h3>iPhone 15 Pro Max - Silver</h3>
+            <div class="preview-card" *ngIf="selectedItem() as item; else noSelection">
+                <div class="status-badge" [class.found]="item.itemType === 'found'">{{ item.itemType }}</div>
+                <img [src]="item.imageUrl || 'https://via.placeholder.com/260x180'" class="hero-img">
+                <h3>{{ item.title }}</h3>
                 <div class="meta-grid">
-                    <div><label>REPORTED</label><span>5/20/2024</span></div>
-                    <div><label>LOCATION</label><span>Central Park North</span></div>
+                    <div><label>REPORTED</label><span>{{ item.createdAt?.slice(0, 10) }}</span></div>
+                    <div><label>LOCATION</label><span>{{ item.location }}</span></div>
                 </div>
+                <p>{{ item.description || 'No description provided.' }}</p>
                 <div class="preview-actions">
-                    <button type="button" class="btn-reject">Reject</button>
-                    <button type="button" class="btn-approve">Approve</button>
+                    <button type="button" class="btn-reject" [disabled]="actionLoading()" (click)="reject(item.id)">Reject</button>
+                    <button type="button" class="btn-approve" [disabled]="actionLoading()" (click)="approve(item.id)">Approve</button>
                 </div>
             </div>
+            <ng-template #noSelection><p>No item selected.</p></ng-template>
             
-            <div class="audit-trail">
+            <!-- <div class="audit-trail">
                 <h4>Recent Audit Trail</h4>
-                <div class="audit-item">
-                    <img src="https://via.placeholder.com/24">
+                <div class="audit-item" *ngFor="let item of filteredItems().slice(0, 5)">
+                    <img [src]="item.imageUrl || 'https://via.placeholder.com/24'">
                     <div class="audit-info">
-                        <strong>Alex Johnson</strong> Approved
-                        <p>Target: ITEM-8799 • 5m ago</p>
+                        <strong>{{ item.user?.name || 'User' }}</strong> submitted item
+                        <p>{{ item.title }} • {{ (item.createdAt?.slice(0, 16) || '').replace('T', ' ') }}</p>
                     </div>
                 </div>
-            </div>
+                <p *ngIf="filteredItems().length === 0">No recent activity.</p>
+            </div> -->
         </aside>
     </div>
 </div>

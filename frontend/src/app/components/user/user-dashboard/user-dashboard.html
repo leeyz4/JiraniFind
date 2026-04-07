@@ -1,22 +1,19 @@
 <div class="user-dashboard-page">
-    <div class="app-container">
-        
-        <nav class="sidebar">
-             <a routerLink="/home" class="logo"><i class="fa-solid fa-shapes"></i> JiraniFind</a>
-            <p class="section-title">MAIN MENU</p>
-            <ul>
-                <li routerLink="/user-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fa-solid fa-table-columns"></i> Dashboard</li>
-                <li routerLink="/browse-items" routerLinkActive="active"><i class="fa-solid fa-magnifying-glass"></i> Browse Items</li>
-                <li routerLink="/my-items" routerLinkActive="active"><i class="fa-regular fa-file-lines"></i> My Reports</li>
-                <!-- <li routerLink="/browse-items"><i class="fa-regular fa-comment-dots"></i> Claims</li> -->
-            </ul>
-            <div class="sidebar-footer">
-                <a routerLink="/report-item" class="btn-report-sidebar"><i class="fa-regular fa-plus-square"></i> Report New Item</a>
-                <button type="button" class="logout" (click)="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
-            </div>
-        </nav>
+    <div class="app-layout">
+            <app-user-side-nav />
 
-        <main class="content-area">
+        <div class="content-area">
+              <header class="top-bar">
+                <div class="user-info">
+                    <i class="fa-regular fa-bell"></i>
+                    <div class="user-text">
+                        <strong>{{ userName() }}</strong><br><span>User</span>
+                    </div>
+                    <img src="../../../../assets/prof.jpg" class="avatar" alt="Profile">
+                </div>
+            </header>
+
+          <main class="content">
             <header class="main-header">
                 <div class="welcome">
                     <h1>Welcome back, {{ userName() }}!</h1>
@@ -30,14 +27,6 @@
                             <button type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>
-                    <a routerLink="/profile" class="user-pill">
-                        <i class="fa-regular fa-bell"></i>
-                        <div class="user-meta">
-                            <strong>{{ userName() }}</strong>
-                            <span>User</span>
-                        </div>
-                        <span class="avatar" aria-hidden="true"></span>
-                    </a>
                 </div>
             </header>
 
@@ -45,15 +34,15 @@
                 <div class="stat-card">
                     <div class="stat-info">
                         <span>Total Reports</span>
-                        <h2>12</h2>
-                        <p class="trend"><i class="fa-solid fa-chart-line"></i> +2 this month</p>
+                        <h2>{{ totalReports() }}</h2>
+                        <p class="trend"><i class="fa-solid fa-chart-line"></i> Live total</p>
                     </div>
                     <div class="stat-icon blue"><i class="fa-solid fa-cube"></i></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-info">
                         <span>Pending Verification</span>
-                        <h2>3</h2>
+                        <h2>{{ pendingReports() }}</h2>
                         <p class="sub-text"><i class="fa-regular fa-clock"></i> Awaiting review</p>
                     </div>
                     <div class="stat-icon grey"><i class="fa-regular fa-clock"></i></div>
@@ -61,7 +50,7 @@
                 <div class="stat-card">
                     <div class="stat-info">
                         <span>Matched Items</span>
-                        <h2>4</h2>
+                        <h2>{{ matchedItems() }}</h2>
                         <p class="trend"><i class="fa-solid fa-chart-line"></i> Ready to claim</p>
                     </div>
                     <div class="stat-icon grey"><i class="fa-solid fa-bolt-lightning"></i></div>
@@ -69,7 +58,7 @@
                 <div class="stat-card">
                     <div class="stat-info">
                         <span>Successfully Claimed</span>
-                        <h2>5</h2>
+                        <h2>{{ completedItems() }}</h2>
                         <p class="trend"><i class="fa-solid fa-chart-line"></i> Completed</p>
                     </div>
                     <div class="stat-icon grey"><i class="fa-regular fa-circle-check"></i></div>
@@ -86,32 +75,24 @@
                         <p class="subtitle">Track the latest updates on your reports</p>
 
                         <div class="activity-list">
-                            <div class="activity-item">
+                            <div class="activity-item" *ngFor="let activity of recentActivity()">
                                 <div class="act-right">
                                   <div class="act-icon blue">
                                       <i class="fa-solid fa-bolt-lightning"></i>
                                   </div>
                                     <div class="act-text">
-                                        <strong>iPhone 13 Pro Max - Silv</strong>
-                                        <p>A potential match has been found at Central Park Station.</p>
+                                        <strong>{{ activity.title }}</strong>
+                                        <p>{{ activity.message }}</p>
                                     </div>
                                 </div>
                                 <div class="act-left">
-                                  <span class="time">2 hours ago</span>
+                                  <span class="time">{{ activity.time }}</span>
                                 </div>
                             </div>
-                            <div class="activity-item">
-                                <div class="act-right">
-                                  <div class="act-icon green">
-                                      <i class="fa-regular fa-circle-check"></i>
-                                  </div>
-                                  <div class="act-text">
-                                      <strong>Brown Leather Wallet</strong>
-                                      <p>Claim #9021 confirmed. Item successfully handed over.</p>
-                                  </div>
-                                </div>
-                                <div class="act-left">
-                                  <span class="time">5 hours ago</span>
+                            <div class="activity-item" *ngIf="recentActivity().length === 0">
+                                <div class="act-text">
+                                  <strong>No recent activity yet</strong>
+                                  <p>New notifications will appear here.</p>
                                 </div>
                             </div>
                         </div>
@@ -155,6 +136,7 @@
                     </div>
                 </div>
             </div>
-        </main>
+          </main>
+        </div>
     </div>
 </div>

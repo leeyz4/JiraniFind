@@ -28,14 +28,14 @@
                 <div class="search-sort-row">
                     <div class="search-bar">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" placeholder="Search by title, location, or description...">
+                        <input
+                          type="text"
+                          placeholder="Search by keyword..."
+                          [ngModel]="searchKeyword()"
+                          (ngModelChange)="setKeyword($event)">
                     </div>
                     <div class="sort-dropdown">
-                        Sort by: <select>
-                            <option>New Reports</option>
-                            <option>Older Reports</option>
-                            <option>Week Old</option>
-                        </select>
+                        <button type="button" class="btn-reset" (click)="loadItems()">Search</button>
                     </div>
                 </div>
 
@@ -44,65 +44,90 @@
                         <div class="filter-group">
                             <label><i class="fa-solid fa-sliders"></i> Filters</label>
                             <p class="filter-label">ITEM STATUS</p>
-                            <label class="check-item"><input type="checkbox" checked> <span class="box lost"></span> Lost Items</label>
-                            <label class="check-item"><input type="checkbox" checked> <span class="box found"></span> Found Items</label>
+                            <label class="check-item">
+                              <input type="checkbox" [checked]="showLost()" (change)="toggleLost($any($event.target).checked)">
+                              <span class="box lost"></span> Lost Items
+                            </label>
+                            <label class="check-item">
+                              <input type="checkbox" [checked]="showFound()" (change)="toggleFound($any($event.target).checked)">
+                              <span class="box found"></span> Found Items
+                            </label>
                         </div>
 
                         <div class="filter-group">
                             <p class="filter-label">CATEGORY</p>
-                            <label class="check-item"><input type="checkbox"> Electronics</label>
-                            <label class="check-item"><input type="checkbox"> Pets</label>
-                            <label class="check-item"><input type="checkbox"> Personal</label>
-                            <label class="check-item"><input type="checkbox"> Accessories</label>
-                            <!-- <label class="check-item"><input type="checkbox"> Fashion</label> -->
-                            <label class="check-item"><input type="checkbox"> Documents</label>
+                            <select class="filter-select" [ngModel]="searchCategory()" (ngModelChange)="setCategory($event)">
+                              <option value="">All categories</option>
+                              <option value="Electronics">Electronics</option>
+                              <option value="Pets">Pets</option>
+                              <option value="Personal">Personal</option>
+                              <option value="Accessories">Accessories</option>
+                              <option value="Documents">Documents</option>
+                            </select>
                         </div>
 
                         <div class="filter-group">
-                            <p class="filter-label">TIMEFRAME</p>
-                            <select class="filter-select"><option>Anytime</option></select>
+                            <p class="filter-label">LOCATION</p>
+                            <input class="filter-select" type="text" placeholder="Search location..." [ngModel]="searchLocation()" (ngModelChange)="setLocation($event)">
                         </div>
 
-                        <button type="button" class="btn-reset">Reset All Filters</button>
+                        <button type="button" class="btn-reset" (click)="resetFilters()">Reset All Filters</button>
                     </aside>
 
                     <section class="items-grid">
+                        @if (loading()) {
+                          <p>Loading approved reports...</p>
+                        }
+                        @if (errorMessage()) {
+                          <p>{{ errorMessage() }}</p>
+                        }
+                        @for (item of filteredItems(); track item.id) {
                         <div class="item-card">
                             <div class="card-img">
-                                <span class="status-badge lost">Lost</span>
-                                <img src="https://via.placeholder.com/300x180" alt="MacBook">
+                                <span class="status-badge" [class.lost]="itemType(item) === 'lost'" [class.found]="itemType(item) === 'found'">{{ itemType(item) }}</span>
+                                <img [src]="item.imageUrl || 'https://via.placeholder.com/300x180'" [alt]="item.title">
                             </div>
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h3>Space Gray MacBook Pro 14"</h3>
-                                    <span class="category-tag">Electronics</span>
+                                    <h3>{{ item.title }}</h3>
+                                    <span class="category-tag">{{ item.category }}</span>
                                 </div>
-                                <p class="loc"><i class="fa-solid fa-location-dot"></i> Central Library, Level 3</p>
-                                <p class="date"><i class="fa-regular fa-calendar"></i> 2024-05-12</p>
-                                <p class="desc">"Left in a black sleeve near the quiet study zone..."</p>
-                                <button type="button" class="btn-action">I found this <i class="fa-solid fa-chevron-right"></i></button>
+                                <p class="loc"><i class="fa-solid fa-location-dot"></i> {{ item.location }}</p>
+                                <p class="date"><i class="fa-regular fa-calendar"></i> {{ itemDate(item).slice(0, 10) }}</p>
+                                <p class="desc">{{ item.description || 'No extra description provided.' }}</p>
+                                <button type="button" class="btn-action" [class.primary]="itemType(item) === 'found'" (click)="openClaim(item)">
+                                  {{ itemType(item) === 'found' ? 'This is mine' : 'I found this' }} <i class="fa-solid fa-chevron-right"></i>
+                                </button>
                             </div>
                         </div>
-
-                        <div class="item-card">
-                            <div class="card-img">
-                                <span class="status-badge found">Found</span>
-                                <img src="https://via.placeholder.com/300x180" alt="Dog">
-                            </div>
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <h3>Golden Retriever Mix (Buddy)</h3>
-                                    <span class="category-tag">Pets</span>
-                                </div>
-                                <p class="loc"><i class="fa-solid fa-location-dot"></i> Riverside Park West</p>
-                                <p class="date"><i class="fa-regular fa-calendar"></i> 2024-05-14</p>
-                                <p class="desc">"Friendly male dog found wandering without a collar..."</p>
-                                <button type="button" class="btn-action">This is mine <i class="fa-solid fa-chevron-right"></i></button>
-                            </div>
-                        </div>
+                        }
                     </section>
                 </div>
             </main>
         </div>
     </div>
+
+    @if (claimModalOpen() && claimingItem(); as item) {
+      <div class="claim-modal-backdrop" (click)="closeClaim()"></div>
+      <div class="claim-modal">
+        <h3>Submit Claim for {{ item.title }}</h3>
+        <p>Provide proof details so admin can verify ownership/allocation.</p>
+        <textarea
+          rows="5"
+          placeholder="Explain why this item is yours / what proof you can provide..."
+          [ngModel]="claimMessage()"
+          (ngModelChange)="setClaimMessage($event)"></textarea>
+        <label class="proof-label">Upload proof file (optional)</label>
+        <input type="file" accept="image/*" (change)="onClaimProofSelected($event)">
+        @if (claimProofFileName()) {
+          <p class="proof-name">Selected: {{ claimProofFileName() }}</p>
+        }
+        <div class="claim-actions">
+          <button type="button" class="btn-reset" (click)="closeClaim()">Cancel</button>
+          <button type="button" class="btn-action primary" [disabled]="claimSubmitting()" (click)="submitClaim()">
+            {{ claimSubmitting() ? 'Submitting...' : 'Submit Claim' }}
+          </button>
+        </div>
+      </div>
+    }
 </div>

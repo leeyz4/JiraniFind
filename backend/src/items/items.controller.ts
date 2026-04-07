@@ -31,8 +31,15 @@ export class ItemsController {
     @Query('status') status?: string,
     @Query('category') category?: string,
     @Query('location') location?: string,
+    @Query('keyword') keyword?: string,
   ) {
-    return this.itemsService.findAll(type as ItemType, status, category, location);
+    return this.itemsService.findAll(
+      type as ItemType,
+      status,
+      category,
+      location,
+      keyword,
+    );
   }
 
   @Get('my-items')

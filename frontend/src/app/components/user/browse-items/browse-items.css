@@ -33,13 +33,13 @@
     position: sticky; 
     top: 0; 
     z-index: 1000; 
-    border-bottom: 1px solid #dee1e4;
+    border-bottom: 1px solid #f5f6f6;
 }
 .user-info { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; }
 .avatar { border-radius: 50%; }
 
 /* Content Layout */
-.content { flex: 1; padding: 40px; overflow-y: auto; }
+.content { flex: 1; padding: 40px; overflow-y: auto; background: #f6f5f5;}
 .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
 .header-text p { color: #646262; }
 .view-toggle { padding: 3px 5px; border-radius: 5px; border: 1px solid #646262; }
@@ -77,5 +77,37 @@
 .loc, .date { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
 .desc { font-size: 0.8rem; color: #475569; font-style: italic; margin: 15px 0; }
 
-.btn-action { width: 80%; padding: 5px 10px; border: 1px solid grey; background: #fff; border-radius: 5px; cursor: pointer; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 5px; }
-.btn-action.primary { background: var(--primary-cyan); color: #fff; border: none; }
+.btn-action, .btn-action.primary { width: 80%; padding: 5px 10px; border: 1px solid grey; background: #fff; border-radius: 5px; cursor: pointer; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 5px; }
+.btn-action:hover, .btn-action.primary:hover, .btn-reset:hover { background: #00d4ff;}
+
+.claim-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    z-index: 1200;
+}
+
+.claim-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(560px, 92vw);
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 18px;
+    z-index: 1201;
+}
+
+.claim-modal textarea {
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.proof-label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 8px; }
+.proof-name { font-size: 12px; color: #475569; margin-top: 6px; }
+.claim-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px; }
