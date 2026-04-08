@@ -1,4 +1,4 @@
-import { Injectable, ForbiddenException } from '@nestjs/common';
+import { Injectable, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemStatusDto } from './dto/update-item.dto';
@@ -119,6 +119,56 @@ export class ItemsService {
     ]);
 
     return { lostItems, foundItems };
+  }
+
+  /** Potential matches stored when the paired item was approved (see MatchingService). */
+  async findMatchesForMyItem(itemId: string, userId: string) {
+    const lostItem = await this.prisma.lostItem.findFirst({
+      where: { id: itemId, userId },
+    });
+    const foundItem = await this.prisma.foundItem.findFirst({
+      where: { id: itemId, userId },
+    });
+    if (!lostItem && !foundItem) {
+      throw new NotFoundException('Report not found');
+    }
+
+    const where = lostItem
+      ? { lostItemId: itemId }
+      : { foundItemId: itemId };
+
+    const rows = await this.prisma.match.findMany({
+      where,
+      orderBy: { createdAt: 'desc' },
+    });
+
+    const results: Array<{
+      confidence: number;
+      itemType: 'lost' | 'found';
+      item: unknown;
+    }> = [];
+
+    for (const m of rows) {
+      if (lostItem && m.foundItemId) {
+        const item = await this.prisma.foundItem.findUnique({
+          where: { id: m.foundItemId },
+          include: { user: { select: { name: true, email: true } } },
+        });
+        if (item) {
+          results.push({ confidence: m.confidence, itemType: 'found', item });
+        }
+      } else if (foundItem && m.lostItemId) {
+        const item = await this.prisma.lostItem.findUnique({
+          where: { id: m.lostItemId },
+          include: { user: { select: { name: true, email: true } } },
+        });
+        if (item) {
+          results.push({ confidence: m.confidence, itemType: 'lost', item });
+        }
+      }
+    }
+
+    return { matches: results };
   }
 
   async updateStatus(id: string, updateItemStatusDto: UpdateItemStatusDto, adminId: string) {

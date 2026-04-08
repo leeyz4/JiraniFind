@@ -9,7 +9,7 @@
                     <div class="user-details">
                         <strong>{{ userName() }}</strong><br><span>User</span>
                     </div>
-                    <img src="https://via.placeholder.com/35" alt="User">
+                    <img src="assets/prof.jpg" alt="User">
                 </div>
             </header>
 
@@ -64,20 +64,57 @@
                           <button type="button" class="btn2" [class.active]="filterType() === 'lost'" (click)="setFilterType('lost')">Lost</button>
                           <button type="button" class="btn3" [class.active]="filterType() === 'found'" (click)="setFilterType('found')">Found</button>
                         </div>
-                        <button type="button" class="btn-icon">
-                            <!-- <i class="fa-solid fa-sliders"></i> -->
-                        </button>
+                        <div class="view-toggle" role="group" aria-label="Report layout">
+                          <button type="button" [class.active]="reportViewMode() === 'list'" (click)="setReportViewMode('list')">List</button>
+                          <button type="button" [class.active]="reportViewMode() === 'cards'" (click)="setReportViewMode('cards')">Cards</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="reports-grid">
+                <div class="reports-content">
                     @if (loading()) {
-                      <p>Loading your reports...</p>
+                      <p class="reports-status">Loading your reports...</p>
                     } @else if (errorMessage()) {
-                      <p>{{ errorMessage() }}</p>
+                      <p class="reports-status">{{ errorMessage() }}</p>
+                    } @else if (items().length === 0) {
+                      <p class="reports-status">No reports yet. Submit one from the Report Item page.</p>
                     } @else if (filteredItems().length === 0) {
-                      <p>No reports yet. Submit one from the Report Item page.</p>
+                      <p class="reports-status">No reports match this filter. Try another tab or clear search.</p>
+                    } @else if (reportViewMode() === 'list') {
+                    <div class="reports-list-wrap">
+                      <table class="reports-table">
+                        <thead>
+                          <tr>
+                            <th class="col-thumb"></th>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Reported</th>
+                            <th>Location</th>
+                            <th class="col-actions">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @for (item of filteredItems(); track item.id) {
+                          <tr>
+                            <td class="col-thumb">
+                              <img [src]="item.imageUrl || 'https://via.placeholder.com/48'" alt="" width="48" height="48" class="list-thumb">
+                            </td>
+                            <td class="col-title"><strong>{{ item.title }}</strong></td>
+                            <td><span class="cell-type">{{ item.itemType | uppercase }}</span></td>
+                            <td><span [class]="'list-badge ' + itemBadgeClass(item)">{{ itemBadgeLabel(item) }}</span></td>
+                            <td class="col-date">{{ item.createdAt?.slice(0, 10) }}</td>
+                            <td class="col-loc">{{ item.location }}</td>
+                            <td class="col-actions">
+                              <button type="button" class="btn-outline-cyan btn-table-sm" (click)="openMatches(item)">Matches</button>
+                            </td>
+                          </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
                     } @else {
+                    <div class="reports-grid">
                     @for (item of filteredItems(); track item.id) {
                     <div class="report-card">
                         <div class="card-image">
@@ -101,14 +138,50 @@
                                     <!-- <i class="fa-solid fa-pen"></i>
                                     <i class="fa-solid fa-trash-can"></i> -->
                                 </div>
-                                <button type="button" class="btn-outline-cyan">View Matches</button>
+                                <button type="button" class="btn-outline-cyan" (click)="openMatches(item)">View Matches</button>
                             </div>
                         </div>
                     </div>
                     }
+                    </div>
                     }
                 </div>
             </div>
         </main>
     </div>
+
+    @if (matchesModalOpen()) {
+    <div class="matches-overlay" (click)="closeMatches()">
+        <div class="matches-dialog" (click)="$event.stopPropagation()">
+            <div class="matches-dialog-head">
+                <h2>Potential matches</h2>
+                <button type="button" class="matches-close" (click)="closeMatches()" aria-label="Close">×</button>
+            </div>
+            <p class="matches-subtitle">For: <strong>{{ matchesItemTitle() }}</strong></p>
+            <p class="matches-hint">Matches are created when an admin approves a complementary lost/found listing 
+              <!-- and the system scores it above the match threshold. -->
+            </p>
+            @if (matchesLoading()) {
+              <p>Loading…</p>
+            } @else if (matchesError()) {
+              <p class="matches-err">{{ matchesError() }}</p>
+            } @else if (matchesForItem().length === 0) {
+              <p>No matches recorded for this report yet.</p>
+            } @else {
+              <ul class="matches-list">
+                @for (m of matchesForItem(); track $index) {
+                <li>
+                  <span class="match-confidence">{{ (m.confidence * 100) | number:'1.0-0' }}% match</span>
+                  <span class="match-type">{{ m.itemType | uppercase }}</span>
+                  <div class="match-body">
+                    <strong>{{ matchItemTitle(m) }}</strong>
+                    <span class="match-meta">{{ matchItemMeta(m) }}</span>
+                  </div>
+                </li>
+                }
+              </ul>
+            }
+        </div>
+    </div>
+    }
 </div>

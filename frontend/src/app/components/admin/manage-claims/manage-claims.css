@@ -14,6 +14,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.admin-wrapper { display: flex; height: 100vh; }
 .top-bar { 
     height: 50px; 
     background: #fff;  
@@ -26,8 +27,8 @@
     z-index: 1000; 
     border-bottom: 1px solid #f5f6f6;
 }
-.user-info { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; }
-.avatar { border-radius: 50%; }
+.user-info { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; margin-left: 1000px; }
+.avatar { border-radius: 50%; width: 20%; }
 .main-claim { flex: 1;}
 
 .manage-claims-page {
@@ -35,15 +36,13 @@
     color: var(--text-main);
 }
 
-.admin-wrapper { display: flex; }
-
 /* Claims List */
 .claims-list {
     width: 320px;
     background: var(--white);
     border-right: 1px solid var(--border);
     padding: 20px 20px;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 .claims-list p {
     color: #646262;
@@ -71,22 +70,33 @@
     background: #00d4ff;;
     color: white;
 }
+.claims-body { background: #f5f6f6;}
+.card-list { width: 60%; margin-bottom: 30px;}
 
 .claim-card {
-    padding: 15px;
-    border-bottom: 1px solid var(--border);
+    /* padding: 20px 30px; */
+    /* border-bottom: 1px solid var(--border); */
     cursor: pointer;
+    margin-top: 30px;
+    background: purple;
 }
+.claim-card-top { border-radius: 10px; width: 100vh; background: #fff; display: flex; justify-content: space-around; align-items: center; padding: 20px 30px; }
 
 .claim-card.active {
     background: #f0fbff;
     border-left: 3px solid var(--primary);
 }
+.thumb { width: 10%;}
+.claimant-meta { display: flex; flex-direction: column; margin-left: 30px;}
+.item-tag { background: maroon;}
 
 .badge {
     font-size: 0.7rem;
     padding: 3px 8px;
-    border-radius: 10px;
+    height: 4vh;
+    margin-left: 50px;
+    border-radius: 20px;
+    /* background: #15803d; */
 }
 
 .badge.pending { background: #fff4e5; color: #ff9800; }
@@ -110,14 +120,17 @@
     align-items: center;
     background: var(--white);
     padding: 15px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
+    border: none;  
+    border-radius: 10px;  
+    background: #ddd;
     margin-bottom: 25px;
+    width: 63%;
 }
 
 .reported-item-box img {
-    border-radius: 5px;
-    margin-right: 15px;
+    /* border-radius: 5px;
+    margin-right: 15px; */
+    width: 10%;
 }
 
 .review-grid {
@@ -125,7 +138,9 @@
     grid-template-columns: 2fr 1fr;
     gap: 20px;
 }
-
+.item-info { padding: 20px 30px;  }
+.btn-outline { border-radius: 5px; padding: 5px 10px; border: none; border: 1px solid #ddd; margin-top: 5px;}
+.user-id { margin-left: 20px; margin-top: -35px; }
 .bubble {
     background: #f0f8ff;
     padding: 20px;
@@ -136,11 +151,16 @@
 }
 
 .verified-details {
-    background: #f9feff;
-    border: 1px solid #d0f0f7;
+    background: #ddd;
+    border: none;
     padding: 15px;
     border-radius: 8px;
+    width: 98%;
 }
+.verified-details ul li { list-style: none;}
+.verified-details ul { margin-bottom: 10px;}
+.status-title { margin-bottom: 10px;}
+/* .btn { gap: 10px;} */
 
 .safety-reminder {
     background: #eefcff;
@@ -160,10 +180,12 @@
     cursor: pointer;
 }
 
-.btn-approve { background: var(--primary); color: white; }
-.btn-reject { background: white; border: 1px solid #ffdada !important; color: #ff4d4d; }
-.btn-message { background: transparent; color: var(--text-muted); }
+.btn-approve { background: transparent; border: none; margin-right: 30px; border: 1px solid #333; border-radius: 5px; padding: 5px 10px; }
+.btn-reject { background:  transparent;border: none; margin-right: 30px; border: 1px solid #333; border-radius: 5px; padding: 5px 10px; color: #ff4d4d; }
+.btn-message { background: transparent; border: none; margin-right: 30px; border: 1px solid #333; border-radius: 5px; padding: 5px 10px; }
+.btn-approve:hover, .btn-reject:hover, .btn-message:hover { background: #00d4ff;}
 
+.proof-section { padding: 20px 30px; background: #ddd; margin-top: 30px; border-radius: 10px; width: 65%;}
 .image-gallery img {
     width: 200px;
     border-radius: 8px;

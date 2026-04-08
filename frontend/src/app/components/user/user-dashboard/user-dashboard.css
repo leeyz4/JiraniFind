@@ -30,8 +30,8 @@
     z-index: 1000; 
     border-bottom: 1px solid #dee1e4;
 }
-.user-info { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; }
-.avatar { border-radius: 50%; }
+.user-info { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; margin-left: 1000px; }
+.avatar { border-radius: 50%; width: 20%;}
 
 /* Main Content Area */
 .content { flex: 1; padding: 40px; overflow-y: auto; }

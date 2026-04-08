@@ -64,6 +64,12 @@ export interface AdminUserRecord {
   };
 }
 
+export interface MyItemMatchEntry {
+  confidence: number;
+  itemType: 'lost' | 'found';
+  item: BrowseItem & { user?: { name?: string; email?: string } };
+}
+
 export interface AdminDashboardResponse {
   stats: {
     totalUsers: number;
@@ -135,6 +141,28 @@ export class Api {
 
   getAdminUsers(): Observable<AdminUserRecord[]> {
     return this.http.get<AdminUserRecord[]>(`${environment.apiUrl}/admin/users`);
+  }
+
+  updateAdminUser(
+    id: string,
+    body: Partial<Pick<AdminUserRecord, 'name' | 'role' | 'isVerified'>>,
+  ): Observable<AdminUserRecord> {
+    return this.http.put<AdminUserRecord>(
+      `${environment.apiUrl}/admin/users/${id}`,
+      body,
+    );
+  }
+
+  deleteAdminUser(id: string): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(
+      `${environment.apiUrl}/admin/users/${id}`,
+    );
+  }
+
+  getMyItemMatches(itemId: string): Observable<{ matches: MyItemMatchEntry[] }> {
+    return this.http.get<{ matches: MyItemMatchEntry[] }>(
+      `${environment.apiUrl}/items/my-items/${itemId}/matches`,
+    );
   }
 
   updateItemStatus(

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { UserSideNav } from '../../../shared/components/user-side-nav/user-side-nav';
 import { Auth } from '../../../core/services/auth';
-import { Api, BrowseItem } from '../../../core/services/api';
+import { Api, BrowseItem, MyItemMatchEntry } from '../../../core/services/api';
 
 @Component({
   selector: 'app-my-items',
@@ -23,6 +23,8 @@ export class MyItems implements OnInit {
   protected readonly filterType = signal<'all' | 'lost' | 'found'>('all');
   protected readonly searchTerm = signal('');
   protected readonly items = signal<Array<BrowseItem & { itemType: 'lost' | 'found' }>>([]);
+  /** List = compact rows; cards = gallery grid (stats use full `items()` either way). */
+  protected readonly reportViewMode = signal<'list' | 'cards'>('list');
 
   ngOnInit(): void {
     this.loadMyItems();
@@ -73,6 +75,10 @@ export class MyItems implements OnInit {
     this.searchTerm.set(value);
   }
 
+  protected setReportViewMode(mode: 'list' | 'cards'): void {
+    this.reportViewMode.set(mode);
+  }
+
   protected totalReports(): number {
     return this.items().length;
   }
@@ -97,5 +103,48 @@ export class MyItems implements OnInit {
 
   protected itemBadgeLabel(item: BrowseItem & { itemType: 'lost' | 'found' }): string {
     return `${item.itemType.toUpperCase()} • ${item.status}`;
+  }
+
+  protected readonly matchesModalOpen = signal(false);
+  protected readonly matchesItemTitle = signal('');
+  protected readonly matchesLoading = signal(false);
+  protected readonly matchesError = signal('');
+  protected readonly matchesForItem = signal<MyItemMatchEntry[]>([]);
+
+  protected openMatches(item: BrowseItem & { itemType: 'lost' | 'found' }): void {
+    this.matchesModalOpen.set(true);
+    this.matchesItemTitle.set(item.title);
+    this.matchesLoading.set(true);
+    this.matchesError.set('');
+    this.matchesForItem.set([]);
+    this.api.getMyItemMatches(item.id).subscribe({
+      next: (res) => {
+        this.matchesLoading.set(false);
+        this.matchesForItem.set(res.matches);
+      },
+      error: () => {
+        this.matchesLoading.set(false);
+        this.matchesError.set('Could not load matches.');
+      },
+    });
+  }
+
+  protected closeMatches(): void {
+    this.matchesModalOpen.set(false);
+  }
+
+  protected matchItemTitle(m: MyItemMatchEntry): string {
+    const row = m.item as { title?: string };
+    return row.title ?? 'Untitled';
+  }
+
+  protected matchItemMeta(m: MyItemMatchEntry): string {
+    const row = m.item as {
+      category?: string;
+      location?: string;
+      status?: string;
+    };
+    const parts = [row.category, row.location, row.status].filter(Boolean);
+    return parts.join(' · ');
   }
 }

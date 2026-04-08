@@ -89,6 +89,18 @@ export class ManageClaims implements OnInit {
     return 'Awaiting Review';
   }
 
+  protected shortClaimId(id: string): string {
+    return id.length > 12 ? `${id.slice(0, 8)}…` : id;
+  }
+
+  protected claimThumbUrl(claim: AdminClaimRecord): string {
+    const item = this.claimItem(claim);
+    const url = item?.imageUrl;
+    if (url && url.startsWith('http')) return url;
+    if (url && url.startsWith('data:')) return url;
+    return 'https://via.placeholder.com/44';
+  }
+
   protected approveClaim(id: string): void {
     this.updateClaim(id, 'APPROVED');
   }

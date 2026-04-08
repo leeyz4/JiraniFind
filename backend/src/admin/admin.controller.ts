@@ -9,6 +9,7 @@ import {
   Request,
   ParseUUIDPipe,
   Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { AdminService, AdminDashboardStats } from './admin.service';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -18,6 +19,7 @@ import {
   UpdateItemStatusDto,
   UpdateClaimStatusDto,
 } from './dto/update-status.dto';
+import { AdminUpdateUserDto } from './dto/update-admin-user.dto';
 import { ItemsService } from '../items/items.service';
 import { ClaimsService } from '../claims/claims.service';
 
@@ -97,8 +99,19 @@ export class AdminController {
     return this.adminService.getAllUsers();
   }
 
+  @Put('users/:id')
+  updateUser(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: AdminUpdateUserDto,
+  ) {
+    return this.adminService.updateUser(id, dto);
+  }
+
   @Delete('users/:id')
-  deleteUser(@Param('id', ParseUUIDPipe) id: string) {
+  deleteUser(@Param('id', ParseUUIDPipe) id: string, @Request() req: { user: { userId: string } }) {
+    if (id === req.user.userId) {
+      throw new BadRequestException('You cannot delete your own account.');
+    }
     return this.adminService.deleteUser(id);
   }
 }

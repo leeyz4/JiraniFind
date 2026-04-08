@@ -15,7 +15,7 @@
     min-height: 100vh;
 }
 
-.admin-wrapper { display: flex; width: 100%; height: 100%; }
+.admin-wrapper { display: flex; height: 100vh; }
 .top-bar { 
     height: 50px; 
     background: #fff;  
@@ -28,8 +28,8 @@
     z-index: 1000; 
     border-bottom: 1px solid #f5f6f6;
 }
-.user-info { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; }
-.avatar { border-radius: 50%; }
+.user-info { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; margin-left: 1000px;}
+.avatar { border-radius: 50%; width: 20%;}
 
 /* Sidebar */
 /* .sidebar { width: 240px; border-right: 1px solid var(--border); padding: 30px 20px; }
@@ -76,8 +76,9 @@ td { padding: 16px 40px; font-size: 14px; border-bottom: 1px solid var(--border)
 .meta-grid span { font-size: 12px; font-weight: 500; }
 
 .preview-actions { display: flex; gap: 10px; margin-top: 20px; }
-.btn-reject { flex: 1; padding: 10px; border: 1px solid #fecaca; color: #ef4444; background: white; border-radius: 6px; }
-.btn-approve { flex: 1; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: 600; }
+.btn-reject { flex: 1; padding: 10px; border: 1px solid #ddd; color: #ef4444; background: transparent; border-radius: 6px; font-weight: 600; }
+.btn-approve { flex: 1; padding: 10px;  border: 1px solid #ddd; color: #3a874c; background: transparent; border-radius: 6px; font-weight: 600; }
+.btn-reject:hover, .btn-approve:hover { background: #00d4ff;}
 
 .audit-trail { margin-top: 30px; }
 .audit-item { display: flex; gap: 12px; margin-top: 15px; }

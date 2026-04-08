@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { AdminUpdateUserDto } from './dto/update-admin-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { ItemsService } from '../items/items.service';
 import { ClaimsService } from '../claims/claims.service';
@@ -138,9 +139,66 @@ export class AdminService {
     });
   }
 
-  async deleteUser(userId: string) {
-    return this.prisma.user.delete({
+  async updateUser(userId: string, dto: AdminUpdateUserDto) {
+    const existing = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!existing) {
+      throw new NotFoundException('User not found');
+    }
+    return this.prisma.user.update({
       where: { id: userId },
+      data: {
+        ...(dto.name !== undefined && { name: dto.name }),
+        ...(dto.role !== undefined && { role: dto.role }),
+        ...(dto.isVerified !== undefined && { isVerified: dto.isVerified }),
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        isVerified: true,
+        createdAt: true,
+        _count: {
+          select: {
+            lostItems: true,
+            foundItems: true,
+            claims: true,
+          },
+        },
+      },
     });
+  }
+
+  async deleteUser(userId: string) {
+    const lostIds = (
+      await this.prisma.lostItem.findMany({
+        where: { userId },
+        select: { id: true },
+      })
+    ).map((r) => r.id);
+    const foundIds = (
+      await this.prisma.foundItem.findMany({
+        where: { userId },
+        select: { id: true },
+      })
+    ).map((r) => r.id);
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.claim.deleteMany({ where: { userId } });
+      await tx.match.deleteMany({
+        where: {
+          OR: [
+            { lostItemId: { in: lostIds } },
+            { foundItemId: { in: foundIds } },
+          ],
+        },
+      });
+      await tx.lostItem.deleteMany({ where: { userId } });
+      await tx.foundItem.deleteMany({ where: { userId } });
+      await tx.notification.deleteMany({ where: { userId } });
+      await tx.user.delete({ where: { id: userId } });
+    });
+
+    return { message: 'User deleted' };
   }
 }

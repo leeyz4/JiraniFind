@@ -52,8 +52,8 @@
     z-index: 1000; 
     border-bottom: 1px solid #dee1e4;
 }
-.user-pill { display: flex; align-items: center; gap: 10px; }
-.user-pill .avatar { border-radius: 50%; width: 35px; }
+.user-pill { display: flex; align-items: center; gap: 10px; margin-left: 1000px; }
+.user-pill .avatar { border-radius: 50%; width: 20%; }
 
 /* Form Layout */
 .form-container { max-width: 900px; margin: 40px auto; padding: 0 20px; }

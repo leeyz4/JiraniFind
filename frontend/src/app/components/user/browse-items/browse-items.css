@@ -35,8 +35,8 @@
     z-index: 1000; 
     border-bottom: 1px solid #f5f6f6;
 }
-.user-info { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; }
-.avatar { border-radius: 50%; }
+.user-info { display: flex; align-items: center;  gap: 12px; font-size: 0.8rem; margin-left: 1000px; }
+.avatar { border-radius: 50%; width: 20%;}
 
 /* Content Layout */
 .content { flex: 1; padding: 40px; overflow-y: auto; background: #f6f5f5;}

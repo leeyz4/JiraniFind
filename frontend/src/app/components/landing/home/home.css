@@ -34,7 +34,7 @@ a.btn-get-started { display: inline-block; text-decoration: none; color: var(--d
 .cyan-text { color: #00d4ff; }
 .hero p { font-size: 18px; color: var(--text-gray); margin-bottom: 35px; max-width: 500px; }
 .hero-visual { position: relative; height: 500px; }
-.main-photo { width: 80%; height: 90%; background: #e2e8f0; border-radius: 24px; position: absolute; right: 0; }
+.main-photo { width: 30%; height: 50%; background: #e2e8f0; border-radius: 24px; }
 .floating-card { position: absolute; background: white; padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 220px; }
 .floating-card.top-right { top: 40px; right: -100px; }
 .floating-card.top-right p, .floating-card.bottom-left p { color: #64748b;}

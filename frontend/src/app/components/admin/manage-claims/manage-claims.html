@@ -9,16 +9,17 @@
                     <div class="user-text">
                         <strong>System Admin</strong><br><span>User</span>
                     </div>
-                    <!-- <img src="https://via.placeholder.com/35" class="avatar" alt="Profile"> -->
+                    <img src="assets/prof.jpg" class="avatar" alt="Profile">
                   </div>
                </header> 
 
+            <div class="claims-body">
             <section class="claims-list">
                 <h1>Claim Requests</h1>
                 <p class="subtitle">Manage ownership verification requests</p>
                 
                 <div class="filter-tabs">
-                    <button type="button" class="tab" [class.active]="selectedStatus() === 'ALL'" (click)="setStatusTab('ALL')">All Claims</button>
+                    <button type="button" class="tab" [class.active]="selectedStatus() === 'ALL'" (click)="setStatusTab('ALL')">All</button>
                     <button type="button" class="tab" [class.active]="selectedStatus() === 'PENDING'" (click)="setStatusTab('PENDING')">Pending</button>
                     <button type="button" class="tab" [class.active]="selectedStatus() === 'APPROVED'" (click)="setStatusTab('APPROVED')">Approved</button>
                     <button type="button" class="tab" [class.active]="selectedStatus() === 'REJECTED'" (click)="setStatusTab('REJECTED')">Rejected</button>
@@ -30,31 +31,7 @@
                   <p class="status-text success">{{ successMessage() }}</p>
                 }
 
-                <div class="card-list">
-                    @if (loading()) {
-                      <p>Loading claims...</p>
-                    } @else if (claims().length === 0) {
-                      <p>No claims found for this filter.</p>
-                    } @else {
-                    @for (claim of claims(); track claim.id) {
-                    <div class="claim-card" [class.active]="selectedClaimId() === claim.id" (click)="selectClaim(claim.id)">
-                        <div class="card-header">
-                            <img src="https://via.placeholder.com/35" class="thumb">
-                            <div class="claimant-meta">
-                                <strong>{{ claim.user?.name || 'Unknown user' }}</strong>
-                                <span>{{ claim.id }}</span>
-                            </div>
-                            <span class="badge" [class.pending]="claim.status === 'PENDING'" [class.verified]="claim.status === 'APPROVED'">{{ statusBadge(claim.status) }}</span>
-                        </div>
-                        <p class="snippet">{{ claim.message || 'No claimant message provided.' }}</p>
-                        <div class="item-tag">
-                          <i class="fa-solid fa-cube"></i>
-                          {{ claimItem(claim)?.title || claimItemRef(claim) }}
-                        </div>
-                    </div>
-                    }
-                    }
-                </div>
+                
             </section>
 
             <main class="claim-detail">
@@ -62,60 +39,114 @@
                 @if (claimItem(claim); as item) {
                 <div class="detail-header">
                     <h1>Claim Review: {{ claim.id }}</h1>
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                    <!-- <i class="fa-solid fa-ellipsis-vertical"></i> -->
                 </div>
 
                 <div class="reported-item-box">
                     <img [src]="item.imageUrl || 'https://via.placeholder.com/60'" alt="item">
                     <div class="item-info">
-                        <span class="label">REPORTED ITEM</span>
-                        <h3>{{ item.title }}</h3>
-                        <p><i class="fa-solid fa-location-dot"></i> {{ item.location }} <i class="fa-regular fa-calendar"></i> {{ (item.dateFound || item.dateLost || '').slice(0, 10) }}</p>
+                        <h3 class="label">REPORTED ITEM</h3>
+                        <p>{{ item.title }}</p>
+                        <p>
+                            <!-- <i class="fa-solid fa-location-dot"></i>  -->
+                            {{ item.location }} 
+                            <!-- <i class="fa-regular fa-calendar"></i>  -->
+                            {{ (item.dateFound || item.dateLost || '').slice(0, 10) }}
+                        </p>
+                         <button type="button" class="btn-outline">{{ item.category }} 
+                        <!-- <i class="fa-solid fa-chevron-right"></i> -->
+                    </button>
                     </div>
-                    <button type="button" class="btn-outline">{{ item.category }} <i class="fa-solid fa-chevron-right"></i></button>
+
+                     <div class="user-id">
+                            <!-- <img src="https://via.placeholder.com/50" class="avatar"> -->
+                                <h3 class="label">USER</h3>
+                                <strong>{{ claim.user?.name || 'Unknown user' }} 
+                                    <!-- <i class="fa-solid fa-circle-check" style="color: #00c3ff;"></i> -->
+                                </strong>
+                                <p>{{ claim.user?.email || 'No email' }}</p>
+                     </div>
+                        <span class="badge" [class.pending]="claim.status === 'PENDING'" [class.verified]="claim.status === 'APPROVED'" [class.rejected]="claim.status === 'REJECTED'">{{ statusBadge(claim.status) }}</span>
                 </div>
+
+                <!-- <div class="card-list">
+                    @if (loading()) {
+                      <p class="card-list-empty">Loading claims…</p>
+                    } @else if (claims().length === 0) {
+                      <p class="card-list-empty">No claims for this filter.</p>
+                    } @else {
+                    @for (claim of claims(); track claim.id) {
+                    <div class="claim-card" [class.active]="selectedClaimId() === claim.id" (click)="selectClaim(claim.id)">
+                        <div class="claim-card-top">
+                            <img [src]="claimThumbUrl(claim)" class="thumb" alt="">
+                            <div class="claimant-meta">
+                                <strong class="claimant-name">{{ claim.user?.name || 'Unknown user' }}</strong>
+                                <span class="claim-id" [title]="claim.id">{{ shortClaimId(claim.id) }}</span>
+                            </div>
+                        </div>
+                        <p class="snippet">{{ claim.message || 'No claimant message provided.' }}</p>
+                        <div class="item-tag">
+                          <i class="fa-solid fa-cube" aria-hidden="true"></i>
+                          <span class="item-tag-text">{{ claimItem(claim)?.title || claimItemRef(claim) }}</span>
+                        </div>
+                    </div>
+                    }
+                    }
+                </div> -->
 
                 <div class="review-grid">
                     <div class="claimant-statement">
-                        <div class="user-id">
-                            <img src="https://via.placeholder.com/50" class="avatar">
-                            <div>
-                                <strong>{{ claim.user?.name || 'Unknown user' }} <i class="fa-solid fa-circle-check" style="color: #00c3ff;"></i></strong>
-                                <p>{{ claim.user?.email || 'No email' }}</p>
-                            </div>
-                        </div>
-                        <div class="bubble">
+                       
+                        <!-- <div class="bubble">
                             <p>{{ claim.message || 'No claimant message provided.' }}</p>
-                        </div>
+                        </div> -->
                         <div class="verified-details">
-                            <p class="status-title"><i class="fa-regular fa-circle-check"></i> VERIFIED DETAILS PROVIDED</p>
+                            <h2 class="status-title">
+                                <!-- <i class="fa-regular fa-circle-check"></i>  -->
+                                VERIFIED DETAILS PROVIDED
+                            </h2>
                             <ul>
                                 <li>Claim status: {{ claim.status }}</li>
                                 <li>Related item: {{ item.title }}</li>
                                 <li>Category: {{ item.category }}</li>
                             </ul>
+                          <div class="btn">
+                             <button type="button" class="btn-approve" [disabled]="actionLoading()" (click)="approveClaim(claim.id)">
+                                <!-- <i class="fa-regular fa-circle-check"></i> -->
+                                 Approve Claim
+                             </button>
+                             <button type="button" class="btn-reject" [disabled]="actionLoading()" (click)="rejectClaim(claim.id)">
+                                <!-- <i class="fa-regular fa-circle-xmark"></i>  -->
+                                Reject Claim
+                             </button>
+                             <button type="button" class="btn-message">
+                                <!-- <i class="fa-regular fa-comment"></i> -->
+                                 Message Claimant
+                             </button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="sidebar-actions">
+                    <!-- <div class="sidebar-actions">
                         <div class="safety-reminder">
                             <h4>SAFETY REMINDER</h4>
                             <p>Before approving, ensure the claimant's description matches your item precisely. Never share sensitive personal info until the claim is verified.</p>
                             <a href="#"><i class="fa-regular fa-circle-check"></i> Safety Checklist</a>
                         </div>
-                        <button type="button" class="btn-approve" [disabled]="actionLoading()" (click)="approveClaim(claim.id)"><i class="fa-regular fa-circle-check"></i> Approve Claim</button>
-                        <button type="button" class="btn-reject" [disabled]="actionLoading()" (click)="rejectClaim(claim.id)"><i class="fa-regular fa-circle-xmark"></i> Reject Claim</button>
-                        <button type="button" class="btn-message"><i class="fa-regular fa-comment"></i> Message Claimant</button>
-                    </div>
+                       
+                    </div> -->
                 </div>
 
-                <div class="proof-section">
-                    <h3><i class="fa-regular fa-image"></i> Proof of Ownership</h3>
+                <!-- <div class="proof-section">
+                    <h3>
+                        <i class="fa-regular fa-image"></i> 
+                        Proof of Ownership
+                    </h3>
                     <div class="image-gallery">
                         <img src="https://via.placeholder.com/250x150" alt="Proof 1">
                         <img src="https://via.placeholder.com/250x150" alt="Proof 2">
                     </div>
-                </div>
+                </div> -->
                 } @else {
                   <div class="detail-header">
                     <h1>Claim Review: {{ claim.id }}</h1>
@@ -129,9 +160,10 @@
                   </div>
                 }
                 } @else {
-                  <p>Select a claim to review details.</p>
+                  <p class="detail-placeholder">Select a claim to review details.</p>
                 }
             </main>
+            </div>
        </div>
     </div>
 </div>

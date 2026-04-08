@@ -9,7 +9,7 @@
                     <div class="user-text">
                         <strong>System Admin</strong><br><span>User</span>
                     </div>
-                    <img src="https://via.placeholder.com/35" class="avatar" alt="Profile">
+                    <img src="assets/prof.jpg" class="avatar" alt="Profile">
                 </div>
             </header> 
 
@@ -33,6 +33,10 @@
                 <span class="description">Authorized system managers</span>
             </div>
         </section>
+
+        @if (actionError() && !editTarget()) {
+            <p class="action-banner">{{ actionError() }}</p>
+        }
 
         <div class="table-controls">
             <input type="text" placeholder="Search by name, email..." class="search-input" [value]="searchTerm()" (input)="setSearch($any($event.target).value)">
@@ -72,12 +76,39 @@
                         <td>{{ user.role }}</td>
                         <td>{{ user.createdAt.slice(0, 10) }}</td>
                         <td>{{ user._count.lostItems + user._count.foundItems }} reports</td>
-                        <td><div class="toggle" [class.active]="user.isVerified"></div></td>
-                        <td class="actions">✎ 🗑 ⋮</td>
+                        <td><div class="toggle" [class.active]="user.isVerified" [attr.title]="user.isVerified ? 'Verified' : 'Unverified'"></div></td>
+                        <td class="action-cell">
+                            <button type="button" class="btn-table" (click)="openEdit(user)" title="Edit user"><i class="fa-solid fa-pen"></i></button>
+                            <button type="button" class="btn-table danger" [disabled]="user.id === currentUserId()" (click)="confirmDelete(user)" title="Delete user"><i class="fa-solid fa-trash-can"></i></button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
+        @if (editTarget(); as u) {
+        <div class="edit-overlay" (click)="closeEdit()">
+            <div class="edit-dialog" (click)="$event.stopPropagation()">
+                <h2>Edit user</h2>
+                <p class="edit-email">{{ u.email }}</p>
+                <label class="edit-label">Name</label>
+                <input type="text" class="edit-input" [ngModel]="editName()" (ngModelChange)="editName.set($event)">
+                <label class="edit-label">Role</label>
+                <select class="edit-input" [ngModel]="editRole()" (ngModelChange)="editRole.set($any($event))">
+                    <option value="USER">User</option>
+                    <option value="ADMIN">Admin</option>
+                </select>
+                <label class="edit-check"><input type="checkbox" [ngModel]="editVerified()" (ngModelChange)="editVerified.set($event)"> Verified</label>
+                @if (actionError()) {
+                  <p class="edit-err">{{ actionError() }}</p>
+                }
+                <div class="edit-actions">
+                    <button type="button" class="btn-cancel" (click)="closeEdit()">Cancel</button>
+                    <button type="button" class="btn-save" [disabled]="actionBusy()" (click)="saveEdit()">{{ actionBusy() ? 'Saving…' : 'Save' }}</button>
+                </div>
+            </div>
+        </div>
+        }
     </main>
   </div>
 </div>

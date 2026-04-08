@@ -46,4 +46,9 @@ export class ItemsController {
   findMyItems(@Request() req) {
     return this.itemsService.findMyItems(req.user.userId);
   }
+
+  @Get('my-items/:itemId/matches')
+  findMyItemMatches(@Param('itemId') itemId: string, @Request() req) {
+    return this.itemsService.findMatchesForMyItem(itemId, req.user.userId);
+  }
 }
